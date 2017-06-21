@@ -6,7 +6,7 @@ library(tidyverse)
 library(plotly)
 library(leaflet)
 library(rgdal)
-library(sp)
+library(raster)
 library(sp)
 
 source('module/home.R')
