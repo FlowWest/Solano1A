@@ -1,4 +1,4 @@
-gound_waterUI <- function(id) {
+ground_waterUI <- function(id) {
   ns <- NS(id)
   
   tagList(
@@ -6,6 +6,6 @@ gound_waterUI <- function(id) {
   )
 }
 
-gound_water <- function(input, output, session) {
+ground_water <- function(input, output, session) {
   
 }
