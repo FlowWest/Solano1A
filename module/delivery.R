@@ -20,6 +20,7 @@ deliveryUI <- function(id) {
                tabPanel(title = "Demand")
              ))  
     )
+
   )
 }
 
@@ -48,4 +49,5 @@ delivery <- function(input, output, session) {
       layout(xaxis = list(title="", tickangle = -45, ticklen = 1, tickfont = 5),
              margin = list(pad = 0, b = 90))
   })
+  
 }
