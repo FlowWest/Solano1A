@@ -16,6 +16,13 @@ applied_demand %>%
 applied_demand %>% 
   ggplot(aes(Boundary, demand_acre_ft, fill=year)) + geom_col(position = "fill")
 
+# plotly version 
+applied_demand %>% 
+  plot_ly(x=~Boundary, y=~demand_acre_ft, color = ~year, type='bar', colors = "Set2") %>% 
+  layout(title = "Applied Water Demand", 
+         xaxis = list(title = "", tickangle = -45), 
+         margin = list(pad = 0, b = 90))
+
 write_rds(applied_demand, "data/delivery/applied_water_demand.rds")
 
 # Solano Deliveries 
@@ -40,9 +47,11 @@ p <- solano_deliveries %>%
 
 # reproduce the plot with plotly 
 solano_deliveries %>% 
-  plot_ly(x=~`Water Resources Management Entity`, y=~value, color=~year, 
-          type='bar') %>% 
-  layout(xaxis = list(title="", tickangle = -45, ticklen = 1, tickfont = 5))
+  mutate(entity_labels = abbreviate(`Water Resources Management Entity`, minlength = 15)) %>% 
+  plot_ly(x=~entity_labels, y=~value, color=~year, 
+          type='bar', colors = "Set2") %>% 
+  layout(xaxis = list(title="", tickangle = -45, ticklen = 1, tickfont = 5), 
+         margin = list(pad = 0, b = 90))
 
 write_rds(solano_deliveries, "data/delivery/solano_county_deliveries.rds")
 
@@ -59,6 +68,48 @@ solano_deliveries %>%
 
 solano_deliveries %>% 
   filter(`Water Resources Management Entity` %in% locs, water_type == "Groundwater")
+
+
+# The names in the rds for delivs do not match those in the shape file, this 
+# fixes this 
+
+
+# named vector will map the names from rds to those in the shape file 
+name_conv_lookup <- c("SID" = "Solano Irrigation District", 
+                      "RD 2068" = "Reclamation District 2068", 
+                      "City of Fairfield" = "Fairfield", 
+                      "City of Vallejo" = "Vallejo", 
+                      "MPWD" = "Maine Prairie Water District", 
+                      "City of Vacaville" = "Vacaville", 
+                      "City of Benicia" = "Benicia", 
+                      "City of Davis" = "Davis", 
+                      "City of Dixon (includes Cal Water Service District)" = "Dixon", 
+                      "Suisun City" = "Suisun City", 
+                      "City of Rio Vista" = "Rio Vista", 
+                      "UC Davis" = "University of California - Davis", 
+                      "Cal State Prison- Solano" = "Cal State Prison- Solano", 
+                      "Rural North Vacaville Water District" = "Rural North Vacaville Water District", 
+                      "Travis Airforce Base" = "Travis Airforce Base")
+
+
+shape_attribute <- name_conv_lookup[solano_deliveries$`Water Resources Management Entity`]
+
+solano_deliveries$shape_ref_attr <- shape_attribute
+
+# write out this new dataset 
+write_rds(solano_deliveries, "data/delivery/solano_county_deliveries.rds")
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
