@@ -1,10 +1,11 @@
-agricultureUI <- function(id) {
+model_awUI <- function(id) {
   ns <- NS(id)
   
   tagList(
     fluidRow(
       column(width = 6,
-             tags$h2('ET')),
+             tags$h2('Modeled Applied Water Dmand (AF/acre)'),
+             tags$h6('blah blah blah')),
       column(width = 6,
              fluidRow(
                column(width = 12,
@@ -12,7 +13,9 @@ agricultureUI <- function(id) {
              ),
              fluidRow(
                column(width = 12,
-                      tags$img(src = 'legend.png', width = '50%')
+                      tags$img(src = 'legend.png', width = '50%'),
+                      tags$p('*Pasture is only modeled as irrigated within Solano irrigation district, 
+                             Reclamation district 2068, and maine prairie water district service areas')
                )
              )
       )
@@ -20,9 +23,8 @@ agricultureUI <- function(id) {
   )
 }
 
-agriculture <- function(input, output, session) {
+model_aw <- function(input, output, session) {
   pal <- colorNumeric(palette = c('#ffffcc', '#a1dab4', '#41b6c4', '#225ea8'), domain = values(CUP_2010), na.color = "transparent")
-  # '#feebe2', '#fbb4b9', '#f768a1', '#ae017e' pink
   
   output$cup <- renderLeaflet({
     leaflet() %>% 
@@ -37,4 +39,17 @@ agriculture <- function(input, output, session) {
   })
 }
 
-# '#feebe2', '#fbb4b9', '#f768a1', '#ae017e'
+cropsUI <- function(id) {
+  ns <- NS(id)
+  
+  tagList(
+    fluidRow(
+      column(width = 12,
+             tags$h2('Crops'))
+    )
+  )
+}
+
+crops <- function(input, output, session) {
+  
+}
