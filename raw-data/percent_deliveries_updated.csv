@@ -1,0 +1,65 @@
+water_resource_entity,year,water_type,percent_of
+Cal State Prison- Solano,2010,gw,0
+Cal State Prison- Solano,2010,sw,100
+Cal State Prison- Solano,2015,gw,0
+Cal State Prison- Solano,2015,sw,100
+City of Benicia,2010,gw,0
+City of Benicia,2010,sw,100
+City of Benicia,2015,gw,0
+City of Benicia,2015,sw,100
+City of Davis,2010,gw,100
+City of Davis,2010,sw,0
+City of Davis,2015,gw,100
+City of Davis,2015,sw,0
+City of Dixon (includes Cal Water Service District),2010,gw,100
+City of Dixon (includes Cal Water Service District),2010,sw,0
+City of Dixon (includes Cal Water Service District),2015,gw,100
+City of Dixon (includes Cal Water Service District),2015,sw,0
+City of Fairfield,2010,gw,0
+City of Fairfield,2010,sw,100
+City of Fairfield,2015,gw,0
+City of Fairfield,2015,sw,100
+City of Rio Vista,2010,gw,100
+City of Rio Vista,2010,sw,0
+City of Rio Vista,2015,gw,100
+City of Rio Vista,2015,sw,0
+City of Vacaville,2010,gw,31
+City of Vacaville,2010,sw,69
+City of Vacaville,2015,gw,39
+City of Vacaville,2015,sw,61
+City of Vallejo,2010,gw,0
+City of Vallejo,2010,sw,100
+City of Vallejo,2015,gw,0
+City of Vallejo,2015,sw,100
+MPWD,2010,gw,0
+MPWD,2010,sw,100
+MPWD,2015,gw,0
+MPWD,2015,sw,100
+RD 2068,2010,gw,0
+RD 2068,2010,sw,100
+RD 2068,2015,gw,0
+RD 2068,2015,sw,100
+Rural North Vacaville Water District,2010,gw,100
+Rural North Vacaville Water District,2010,sw,0
+Rural North Vacaville Water District,2015,gw,100
+Rural North Vacaville Water District,2015,sw,0
+SID,2010,gw,3.757315023
+SID,2010,sw,96.24268498
+SID,2015,gw,2.77578368
+SID,2015,sw,97.22421632
+Suisun City,2010,gw,0
+Suisun City,2010,sw,100
+Suisun City,2015,gw,0
+Suisun City,2015,sw,100
+Travis Airforce Base,2010,gw,0.308794968
+Travis Airforce Base,2010,sw,99.69120503
+Travis Airforce Base,2015,gw,5.40526991
+Travis Airforce Base,2015,sw,94.59473009
+UC Davis,2010,gw,0
+UC Davis,2010,sw,100
+UC Davis,2015,gw,0
+UC Davis,2015,sw,100
+Solano,2010,gw,7
+Solano,2010,sw,93
+Solano,2015,gw,6
+Solano,2015,sw,94
