@@ -1,0 +1,29 @@
+Staff initials: AC 
+Title: Water Management Entities in and near Solano County (mgmt_ents.shp)
+Data Type (point, line, polygon): polygon 
+Date acquired by FlowWest:
+Source: FlowWest 2016
+Contact Information: 
+Projected Coordinate System: NAD_1983_StatePlane_California_II_FIPS_0402_Feet
+
+Notes: Created by synthesizing several water management entity boundary layers from Solano County GIS. Attributes describe water delivery, source, and for some entities, modeled applied water demand for 2010 and 2015.
+
+GWD_10 = volume of reported delivery from groundwater sources for 2010 in units of acre-feet
+
+SWD_10 = volume of reported delivery from surface water sources for 2010 in units of acre-feet
+
+GWD_15 = volume of reported delivery from groundwater sources for 2015 in units of acre-feet
+
+SWD_15 = volume of reported delivery from surface water sources for 2015 in units of acre-feet
+
+Del_10_AF = total volume of reported delivery for 2010 in units of acre-feet
+
+Del_15_AF = total volume of reported delivery for 2015 in units of acre-feet
+
+prct_GW_10 = percent of total volume of reported delivery supplied by groundwater for 2010 in units of acre-feet 
+
+prct_GW_15 = percent of total volume of reported delivery supplied by groundwater for 2015 in units of acre-feet 
+
+Dem_10_AF = modeled agricultural water demand for 2010 in units of acre-feet (only for select water management entities)
+
+Dem_15_AF = modeled agricultural water demand for 2015 in units of acre-feet (only for select water management entities)

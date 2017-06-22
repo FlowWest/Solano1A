@@ -70,5 +70,47 @@ solano_deliveries %>%
   filter(`Water Resources Management Entity` %in% locs, water_type == "Groundwater")
 
 
+# The names in the rds for delivs do not match those in the shape file, this 
+# fixes this 
+
+
+# named vector will map the names from rds to those in the shape file 
+name_conv_lookup <- c("SID" = "Solano Irrigation District", 
+                      "RD 2068" = "Reclamation District 2068", 
+                      "City of Fairfield" = "Fairfield", 
+                      "City of Vallejo" = "Vallejo", 
+                      "MPWD" = "Maine Prairie Water District", 
+                      "City of Vacaville" = "Vacaville", 
+                      "City of Benicia" = "Benicia", 
+                      "City of Davis" = "Davis", 
+                      "City of Dixon (includes Cal Water Service District)" = "Dixon", 
+                      "Suisun City" = "Suisun City", 
+                      "City of Rio Vista" = "Rio Vista", 
+                      "UC Davis" = "University of California - Davis", 
+                      "Cal State Prison- Solano" = "Cal State Prison- Solano", 
+                      "Rural North Vacaville Water District" = "Rural North Vacaville Water District", 
+                      "Travis Airforce Base" = "Travis Airforce Base")
+
+
+shape_attribute <- name_conv_lookup[solano_deliveries$`Water Resources Management Entity`]
+
+solano_deliveries$shape_ref_attr <- shape_attribute
+
+# write out this new dataset 
+write_rds(solano_deliveries, "data/delivery/solano_county_deliveries.rds")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
