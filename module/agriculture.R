@@ -3,20 +3,38 @@ agricultureUI <- function(id) {
   
   tagList(
     fluidRow(
-      column(width = 6),
       column(width = 6,
-             withSpinner(ns('cup'), type = 8, color = '#666666'))
+             tags$h2('ET')),
+      column(width = 6,
+             fluidRow(
+               column(width = 12,
+                      withSpinner(leafletOutput(ns('cup'), height = 600), type = 8, color = '#666666'))
+             ),
+             fluidRow(
+               column(width = 12,
+                      tags$img(src = 'legend.png', width = '50%')
+               )
+             )
+      )
     )
   )
 }
 
 agriculture <- function(input, output, session) {
+  pal <- colorNumeric(palette = c('#ffffcc', '#a1dab4', '#41b6c4', '#225ea8'), domain = values(CUP_2010), na.color = "transparent")
+  # '#feebe2', '#fbb4b9', '#f768a1', '#ae017e' pink
+  
   output$cup <- renderLeaflet({
     leaflet() %>% 
-      addProviderTiles(providers$Thunderforest.Outdoors, group = 'Map') %>% 
+      addProviderTiles(providers$CartoDB.Positron, group = 'Map') %>% 
+      addProviderTiles(providers$CartoDB.DarkMatter, group = 'Dark Map') %>% 
       addProviderTiles(providers$Esri.WorldImagery, group = 'Satelite') %>%
-      addRasterImage(CUP_2010, group = '2010') %>% 
-      addRasterImage(CUP_2015, group = '2015') %>% 
-      addLayersControl(baseGroups = c('Map', 'Satelite'), overlayGroups = c('2010', '2015'))
+      addRasterImage(CUP_2010, group = '2010', colors = pal) %>% 
+      addRasterImage(CUP_2015, group = '2015', colors = pal) %>% 
+      addLayersControl(baseGroups = c('Map', 'Dark Map', 'Satelite'), overlayGroups = c('2010', '2015'),
+                       options = layersControlOptions(collapsed = FALSE)) %>% 
+      hideGroup('2015') 
   })
 }
+
+# '#feebe2', '#fbb4b9', '#f768a1', '#ae017e'
