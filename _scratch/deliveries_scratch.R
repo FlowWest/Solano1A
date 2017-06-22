@@ -16,6 +16,13 @@ applied_demand %>%
 applied_demand %>% 
   ggplot(aes(Boundary, demand_acre_ft, fill=year)) + geom_col(position = "fill")
 
+# plotly version 
+applied_demand %>% 
+  plot_ly(x=~Boundary, y=~demand_acre_ft, color = ~year, type='bar', colors = "Set2") %>% 
+  layout(title = "Applied Water Demand", 
+         xaxis = list(title = "", tickangle = -45), 
+         margin = list(pad = 0, b = 90))
+
 write_rds(applied_demand, "data/delivery/applied_water_demand.rds")
 
 # Solano Deliveries 
@@ -40,9 +47,11 @@ p <- solano_deliveries %>%
 
 # reproduce the plot with plotly 
 solano_deliveries %>% 
-  plot_ly(x=~`Water Resources Management Entity`, y=~value, color=~year, 
-          type='bar') %>% 
-  layout(xaxis = list(title="", tickangle = -45, ticklen = 1, tickfont = 5))
+  mutate(entity_labels = abbreviate(`Water Resources Management Entity`, minlength = 15)) %>% 
+  plot_ly(x=~entity_labels, y=~value, color=~year, 
+          type='bar', colors = "Set2") %>% 
+  layout(xaxis = list(title="", tickangle = -45, ticklen = 1, tickfont = 5), 
+         margin = list(pad = 0, b = 90))
 
 write_rds(solano_deliveries, "data/delivery/solano_county_deliveries.rds")
 
