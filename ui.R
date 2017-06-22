@@ -1,8 +1,8 @@
 navbarPage(
-  title = 'Solano 1A',
+  title = 'Solano County',
   theme = shinytheme(theme = 'paper'),
   header = includeCSS('styles.css'),
-  tabPanel(title = 'About Solano 1A',
+  tabPanel(title = 'Home',
            homeUI('one')),
   tabPanel(title = 'Deliveries',
            deliveryUI('one')),
