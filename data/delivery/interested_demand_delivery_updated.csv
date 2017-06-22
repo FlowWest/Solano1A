@@ -1,0 +1,17 @@
+water_resource_entity,year,year_total,type
+County,2010,206448.66,delivery
+County,2015,248409.61,delivery
+RD 2068,2010,51911.64,delivery
+RD 2068,2015,65074,delivery
+SID,2010,106459,delivery
+SID,2015,129549,delivery
+MPWD,2010,48078.02,delivery
+MPWD,2015,53786.61,delivery
+County,2010,255885.8939,demand
+County,2015,285301.8123,demand
+RD 2068,2010,21880.71704,demand
+RD 2068,2015,29058.39486,demand
+SID,2010,107758.9798,demand
+SID,2015,114842.6343,demand
+MPWD,2010,27298.39273,demand
+MPWD,2015,33505.71268,demand
