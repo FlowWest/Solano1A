@@ -19,7 +19,7 @@ source('module/water_balance.R')
 applied_demand <- read_rds("data/delivery/applied_water_demand.rds")
 solano_deliveries <- read_rds("data/delivery/solano_county_deliveries.rds")
 
-ROIs <- rgdal::readOGR('data/solano_ROI.shp', stringsAsFactors = FALSE) %>% 
+ROIs <- rgdal::readOGR('data/ROI/solano_ROI.shp', stringsAsFactors = FALSE) %>% 
   spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
 
 deliv_entities <- rgdal::readOGR('data/mgmt_entities_delivery/', stringsAsFactors = FALSE) %>% 
