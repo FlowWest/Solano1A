@@ -33,3 +33,4 @@ home <- function(input, output, session) {
       addLayersControl(baseGroups = c('Map', 'Satelite'), overlayGroups = c('Name'))
   })  
 }
+
