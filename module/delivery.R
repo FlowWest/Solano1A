@@ -27,6 +27,25 @@ deliveryUI <- function(id) {
 # Server ----------------------------------------------------------------------
 delivery <- function(input, output, session) {
   
+  map_events <- reactiveValues(clikced_shape = NULL)
+  
+  # listen for a click on a shape file
+  observeEvent(input$delivery_map_shape_click, {
+    map_events$clicked_shape <- input$delivery_map_shape_click$id
+  })
+  
+  # click on background causes reset
+  observeEvent(input$delivery_map_click, {
+    map_events$clicked_shape <- NULL
+  })
+  
+  deliveries <- reactive({
+    if (is.null(map_events$clicked_shape)) {
+      return(solano_deliveries)
+    }
+    solano_deliveries %>% 
+      filter(shape_ref_attr == map_events$clicked_shape)
+  })
   
   pal <- colorFactor(palette = 'Dark2', domain = ROIs$Name)
   # need to figure out spatial component to delivery data
@@ -42,7 +61,7 @@ delivery <- function(input, output, session) {
   })
   
   output$deliver_plot <- renderPlotly({
-    solano_deliveries %>% 
+    deliveries() %>% 
       mutate(entity_labels = abbreviate(`Water Resources Management Entity`, minlength = 15)) %>% 
       plot_ly(x=~entity_labels, y=~value, color=~year, 
               type='bar', colors = "Set2") %>% 
