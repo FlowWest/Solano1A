@@ -5,20 +5,22 @@ deliveryUI <- function(id) {
   tagList(
     # top row host map
     fluidRow(
-      column(width = 12, 
+      column(width = 6, 
              # need to figure out spatial component to delivery data
-             withSpinner(leafletOutput(ns('delivery_map')), type = 8, color = '#666666'))
-    ), 
-    
-    # bottom row host plots
-    fluidRow(
-      column(width = 12, 
-             tabsetPanel(
-               tabPanel(title = "Delivery", 
-                        withSpinner(plotlyOutput(ns("deliver_plot")), 
-                        type = 8, color = '#666666')), 
+             withSpinner(leafletOutput(ns('delivery_map'), height = 800), 
+                         type = 8, color = '#666666')), 
+      column(width = 6, 
+             fluidRow(
+               tabsetPanel(
+                 tabPanel(title = "Delivery", 
+                          withSpinner(plotlyOutput(ns("deliver_plot")), 
+                                      type = 8, color = '#666666'))
+               )
+             ), 
+             fluidRow(
                tabPanel(title = "Demand")
-             ))  
+             )
+             )
     )
 
   )
@@ -47,7 +49,14 @@ delivery <- function(input, output, session) {
       filter(shape_ref_attr == map_events$clicked_shape)
   })
   
-  pal <- colorFactor(palette = 'Dark2', domain = ROIs$Name)
+  selected_ents <- reactive({
+    d <- event_data("plotly_hover", source = 'source')
+    
+    entity <- as.character(d[['key']])
+    
+    return(deliv_entities[deliv_entities$Name == entity, ])
+  })
+  
   # need to figure out spatial component to delivery data
   output$delivery_map <- renderLeaflet({
     leaflet() %>% 
@@ -56,17 +65,25 @@ delivery <- function(input, output, session) {
       # basic polygon added needs work!
       addPolygons(data = deliv_entities, fillColor=~Name, 
                   layerId=~Name, weight = 2, 
-                  popup = ~Name) %>% 
-      addLayersControl(baseGroups = c('Map', 'Satelite'), overlayGroups = c('Name'))
+                  label = ~Name) %>% 
+      addLayersControl(baseGroups = c('Map', 'Satelite'))
   })
   
   output$deliver_plot <- renderPlotly({
     deliveries() %>% 
       mutate(entity_labels = abbreviate(`Water Resources Management Entity`, minlength = 15)) %>% 
       plot_ly(x=~entity_labels, y=~value, color=~year, 
-              type='bar', colors = "Set2") %>% 
+              type='bar', colors = "Set2", source = 'source', key = ~shape_ref_attr) %>% 
       layout(xaxis = list(title="", tickangle = -45, ticklen = 1, tickfont = 5),
-             margin = list(pad = 0, b = 90))
+             margin = list(pad = 0, b = 90), 
+             dragmode = "zoom")
+  })
+  
+  observe({
+    leafletProxy("delivery_map", data = selected_ents()) %>% 
+      clearGroup("hl_layer") %>% 
+      addPolygons(fill = FALSE, color = '#FFFF00',
+                  opacity = 1, group = "hl_layer") 
   })
   
 }
