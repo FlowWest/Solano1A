@@ -31,11 +31,15 @@ ROIs <- rgdal::readOGR('data/ROI/solano_ROI.shp', stringsAsFactors = FALSE) %>%
 deliv_entities <- rgdal::readOGR('data/mgmt_entities_delivery/', stringsAsFactors = FALSE) %>% 
   spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
 
+groundwater_basins <- rgdal::readOGR('data/B118_CA_GroundwaterBasins_Revised2016/i08_B118_CA_GroundwaterBasins.shp', stringsAsFactors = FALSE) %>% 
+  spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs")) %>% 
+  subset(Basin_Subb %in% c('2-002.03', '2-003', '5-021.66'))
+
 # modeled applied water demand
 CUP_2010 <- raster::raster('data/cup2010/2010_CUP.tif')
 CUP_2015 <- raster::raster('data/cup2015/2015_CUP.tif')
 
-# ground water
+# groundwater
 # fall_chg <- raster::raster('data/GW_change/fall_chng_surface/Co_f15to10_KS.tif') %>% 
 #   projectRasterForLeaflet()
 # writeRaster(fall_chg, 'data/GW_change/fall_chng_surface/fall_change_surface.grd')

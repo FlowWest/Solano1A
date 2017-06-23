@@ -23,14 +23,18 @@ homeUI <- function(id) {
 
 home <- function(input, output, session) {
 
-  pal <- colorFactor(palette = 'Dark2', domain = ROIs$Name)
+  pal <- colorFactor(palette = 'Dark2', domain = deliv_entities$Name)
+  pal2 <- colorFactor(palette = 'Dark2', domain = groundwater_basins$Basin_Name)
+  
   output$ROI <- renderLeaflet({
     leaflet() %>% 
-      addProviderTiles(providers$Thunderforest.Outdoors, group = 'Map') %>% 
+      addProviderTiles(providers$CartoDB.Positron, group = 'Map') %>% 
       addProviderTiles(providers$Esri.WorldImagery, group = 'Satelite') %>% 
-      addPolygons(data = ROIs, color = ~pal(Name), group = 'Name', label = ~Name, 
-                  popup = ~paste('<b>', Name, '</b>', '<br>', pretty_num(Acres, 0), ' Acres')) %>% 
-      addLayersControl(baseGroups = c('Map', 'Satelite'), overlayGroups = c('Name'))
+      addPolygons(data = county, group = 'Solano County', color = '#666666', fill = FALSE) %>% 
+      addPolygons(data = groundwater_basins, label = ~Basin_Name, color = ~pal2(Basin_Name), group = 'Groundwater Basins') %>% 
+      addPolygons(data = deliv_entities, color = ~pal(Name), weight = 2, 
+                  label = ~Name, group = 'Delivery Entity') %>% 
+      addLayersControl(baseGroups = c('Map', 'Satelite'), overlayGroups = c('Delivery Entity', 'Solano County', 'Groundwater Basins'))
   })  
 }
 

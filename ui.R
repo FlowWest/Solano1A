@@ -7,16 +7,14 @@ navbarPage(
   tabPanel(title = 'Deliveries',
            deliveryUI('one')),
   navbarMenu(title = 'Agriculture',
-             tabPanel(title = 'Modeled Applied Water Demand',
-                      model_awUI('one')),
              tabPanel(title = 'Crops',
-                      cropsUI('one'))),
-  navbarMenu(title = 'Ground Water',
-             tabPanel(title = 'Elevation Change',
-                      elevation_changeUI('one')),
-             tabPanel(title = 'Demand',
-                      demandUI('one'))
-                      ),
+                      cropsUI('one')),
+             tabPanel(title = 'Water Demand - By Crop Type',
+                      model_awUI('one')),
+             tabPanel(title = 'Water Demand - By Entity or Region',
+                      demandUI('one'))),
+  tabPanel(title = 'Groundwater',
+           elevation_changeUI('one')),
   tabPanel(title = 'Water Balance',
            water_balanceUI('one'))
 )
