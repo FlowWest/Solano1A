@@ -19,15 +19,39 @@ source('module/water_balance.R')
 applied_demand <- read_rds("data/delivery/applied_water_demand.rds")
 solano_deliveries <- read_rds("data/delivery/solano_county_deliveries.rds")
 
+sub_basin <- rgdal::readOGR('data/solano_subbasin/solano_subasin2016.shp', stringsAsFactors = FALSE) %>% 
+  spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
+
+county <- rgdal::readOGR('data/county_boundaries/countyboundarypoly.shp', stringsAsFactors = FALSE) %>% 
+  spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
+
 ROIs <- rgdal::readOGR('data/ROI/solano_ROI.shp', stringsAsFactors = FALSE) %>% 
   spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
 
 deliv_entities <- rgdal::readOGR('data/mgmt_entities_delivery/', stringsAsFactors = FALSE) %>% 
   spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
 
-# modeled evapotransport applied water 
+# modeled applied water demand
 CUP_2010 <- raster::raster('data/cup2010/2010_CUP.tif')
 CUP_2015 <- raster::raster('data/cup2015/2015_CUP.tif')
+
+# ground water
+# fall_chg <- raster::raster('data/GW_change/fall_chng_surface/Co_f15to10_KS.tif') %>% 
+#   projectRasterForLeaflet()
+# writeRaster(fall_chg, 'data/GW_change/fall_chng_surface/fall_change_surface.grd')
+
+fall_chg <- raster::raster('data/GW_change/fall_chng_surface/fall_change_surface.grd')
+fall_chg_wells <- rgdal::readOGR('data/GW_change/fall_chng_at_wells/f2015_to_f2010.shp', stringsAsFactors = FALSE) %>% 
+  spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
+
+# spring_chg <- raster::raster('data/GW_change/spring_chng_surface/Co_s15to10_KS.tif') %>% 
+#   projectRasterForLeaflet()
+# writeRaster(spring_chg, 'data/GW_change/spring_chng_surface/spring_change_surface.grd')
+
+spring_chg <- raster::raster('data/GW_change/spring_chng_surface/spring_change_surface.grd')
+spring_chg_wells <- rgdal::readOGR('data/GW_change/spring_chng_at_wells/s2015_to_s2010.shp', stringsAsFactors = FALSE) %>% 
+  spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
+
 
 pretty_num <- function(num, places = 2) {
   format(round(num, places), big.mark = ',', drop = FALSE)

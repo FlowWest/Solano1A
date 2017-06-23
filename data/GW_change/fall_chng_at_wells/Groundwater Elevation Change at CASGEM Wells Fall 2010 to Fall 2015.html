@@ -1,0 +1,281 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <title>Groundwater Elevation Change at CASGEM Wells: Fall 2010 to Fall 2015</title>
+  <link rel="schema.dc" href="http://purl.org/metadata/dublin_core"/>
+  <meta name="dc.title" content="Groundwater Elevation Change at CASGEM Wells: Fall 2010 to Fall 2015 "/>
+  <meta name="dc.description" content="Groundwater elevation change (in feet) from fall 2010 to fall 2015 from CASGEM well records, with groundwater elevation change at point locations from interpolated surface. Created for the Solano County Water Resources Study completed in 2016. Created by: Anna Constantino, FlowWest, aconstantino@flowwest.com "/>
+  <meta name="dc.type" content="data.vector digital data"/>
+  <meta name="dc.lang" content="en"/>
+  <meta name="dc.coverage.x.min" scheme="DD" content="-122.504502"/>
+  <meta name="dc.coverage.x.max" scheme="DD" content="-121.667381"/>
+  <meta name="dc.coverage.y.min" scheme="DD" content="38.150010"/>
+  <meta name="dc.coverage.y.max" scheme="DD" content="38.672464"/>
+  <meta name="dc.rights" content="Access constraints: None; Use constraints: None"/>
+  <meta name="generated-from" content="U:\Active Projects\Solano_County_Water_Resources\GIS\Geodata\Vector\Shapes\GroundwaterTrends_Phase1A\WSE_Change\Fall2015_to_Fall2010\with_surface_values\f2015_to_f2010.xml"/>
+</head>
+<body>
+<h1>Groundwater Elevation Change at CASGEM Wells: Fall 2010 to Fall 2015</h1>
+Metadata also available as<p>
+<h1>Metadata:</h1>
+<ul>
+<li><a href="#1">Identification_Information</a></li>
+<li><a href="#2">Spatial_Data_Organization_Information</a></li>
+<li><a href="#3">Spatial_Reference_Information</a></li>
+<li><a href="#4">Entity_and_Attribute_Information</a></li>
+<li><a href="#5">Metadata_Reference_Information</a></li>
+</ul>
+<a name="1">
+</a>
+<hr/>
+<dl>
+<dt><em>Identification_Information:</em>  
+<dd>
+<dl>
+<dt><em>Citation:</em>  
+<dd>
+<dl>
+<dt><em>Citation_Information:</em>  
+<dd>
+<dl>
+<dt><em>Title:</em>  
+<dd>
+
+Groundwater Elevation Change at CASGEM Wells: Fall 2010 to Fall 2015
+
+</dd>
+<dt><em>Geospatial_Data_Presentation_Form:</em>  vector digital data</dt>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt><em>Description:</em>  
+<dd>
+<dl>
+<dt><em>Abstract:</em>  
+<dd>
+
+Groundwater elevation change (in feet) from fall 2010 to fall 2015 from CASGEM well records, with groundwater elevation change at point locations from interpolated surface. Created for the Solano County Water Resources Study completed in 2016. Created by: Anna Constantino, FlowWest, aconstantino@flowwest.com
+
+</dd>
+<dt><em>Purpose:</em>  
+<dd>
+
+We used CASGEM well records to create interpolated surfaces of groundwater elevation change across Solano County for Spring and Fall seasons from 2010 to 2015. We defined the Spring season measurements as the median of April measurements at each well (in cases where there were multiply April measurements), and if there were no April well records, then we used the latest measurement in March or the earliest measurement in May. To define the Fall season, we followed a similar pattern using October measurements when possible, and if not the latest in September or earliest in November. We did this analysis for all wells within a 10 mile buffer around Solano County. We differenced the respective Fall and Spring measurements from wells with measurements in both 2010 and 2015, and created two datasets of groundwater elevation change per season from 2010 to 2015. This difference is documented in the field &quot;WSE_F15_10&quot; in units of feet.
+<br/>
+We used the Kriging tool in ArcMap (Ordinary; Spherical semivariogram model) to interpolate a surface of groundwater change from the point data. This process smooths out the actual input data points, and therefore the interpolated surface is best used to identify broad trends across the County—particularly given the small sample size given the spatial extent of the interpolation. The pixel value of groundwater elevation change from the interpolated raster surface that overlays the point well location was added to this shapefile to help evaluate the accuracy of the interpolated surface. The Kriging-interpolated groundwater elevation change is documented in the field &quot;F15_10_Kri&quot; in units of feet.
+
+</dd>
+</dl>
+</dd>
+<dt><em>Spatial_Domain:</em>  
+<dd>
+<dl>
+<dt><em>Bounding_Coordinates:</em>  
+<dd>
+<dl>
+<dt><em>West_Bounding_Coordinate:</em>  -122.504502</dt>
+<dt><em>East_Bounding_Coordinate:</em>  -121.667381</dt>
+<dt><em>North_Bounding_Coordinate:</em>  38.672464</dt>
+<dt><em>South_Bounding_Coordinate:</em>  38.150010</dt>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt><em>Access_Constraints:</em>  None</dt>
+<dt><em>Use_Constraints:</em>  None</dt>
+<dt><em>Native_Data_Set_Environment:</em>  
+<dd>
+
+Microsoft Windows 7 Version 6.1 (Build 7601) Service Pack 1; Esri ArcGIS 10.3.0.4322
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+<a name="2">
+</a>
+<hr/>
+<dl>
+<dt><em>Spatial_Data_Organization_Information:</em>  
+<dd>
+<dl>
+<dt><em>Direct_Spatial_Reference_Method:</em>  Vector</dt>
+<dt><em>Point_and_Vector_Object_Information:</em>  
+<dd>
+<dl>
+<dt><em>SDTS_Terms_Description:</em>  
+<dd>
+<dl>
+<dt><em>SDTS_Point_and_Vector_Object_Type:</em>  Entity point</dt>
+<dt><em>Point_and_Vector_Object_Count:</em>  64</dt>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<a name="3">
+</a>
+<hr/>
+<dl>
+<dt><em>Spatial_Reference_Information:</em>  
+<dd>
+<dl>
+<dt><em>Horizontal_Coordinate_System_Definition:</em>  
+<dd>
+<dl>
+<dt><em>Planar:</em>  
+<dd>
+<dl>
+<dt><em>Map_Projection:</em>  
+<dd>
+<dl>
+<dt><em>Map_Projection_Name:</em>  NAD 1983 StatePlane California II FIPS 0402 Feet</dt>
+<dt><em>Lambert_Conformal_Conic:</em>  
+<dd>
+<dl>
+<dt><em>Standard_Parallel:</em>  38.33333333333334</dt>
+<dt><em>Standard_Parallel:</em>  39.83333333333334</dt>
+<dt><em>Longitude_of_Central_Meridian:</em>  -122.0</dt>
+<dt><em>Latitude_of_Projection_Origin:</em>  37.66666666666666</dt>
+<dt><em>False_Easting:</em>  6561666.666666666</dt>
+<dt><em>False_Northing:</em>  1640416.666666667</dt>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt><em>Planar_Coordinate_Information:</em>  
+<dd>
+<dl>
+<dt><em>Planar_Coordinate_Encoding_Method:</em>  coordinate pair</dt>
+<dt><em>Coordinate_Representation:</em>  
+<dd>
+<dl>
+<dt><em>Abscissa_Resolution:</em>  0.000000027039137595608057</dt>
+<dt><em>Ordinate_Resolution:</em>  0.000000027039137595608057</dt>
+</dl>
+</dd>
+<dt><em>Planar_Distance_Units:</em>  foot_us</dt>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt><em>Geodetic_Model:</em>  
+<dd>
+<dl>
+<dt><em>Horizontal_Datum_Name:</em>  D North American 1983</dt>
+<dt><em>Ellipsoid_Name:</em>  GRS 1980</dt>
+<dt><em>Semi-major_Axis:</em>  6378137.0</dt>
+<dt><em>Denominator_of_Flattening_Ratio:</em>  298.257222101</dt>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<a name="4">
+</a>
+<hr/>
+<dl>
+<dt><em>Entity_and_Attribute_Information:</em>  
+<dd>
+<dl>
+<dt><em>Detailed_Description:</em>  
+<dd>
+<dl>
+<dt><em>Entity_Type:</em>  
+<dd>
+<dl>
+<dt><em>Entity_Type_Label:</em>  f2015_to_f2010</dt>
+</dl>
+</dd>
+<dt><em>Attribute:</em>  
+<dd>
+<dl>
+<dt><em>Attribute_Label:</em>  FID</dt>
+<dt><em>Attribute_Definition:</em>  Internal feature number.</dt>
+<dt><em>Attribute_Definition_Source:</em>  Esri</dt>
+<dt><em>Attribute_Domain_Values:</em>  
+<dd>
+<dl>
+<dt><em>Unrepresentable_Domain:</em>  
+<dd>
+
+Sequential unique whole numbers that are automatically generated.
+
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt><em>Attribute:</em>  
+<dd>
+<dl>
+<dt><em>Attribute_Label:</em>  Shape</dt>
+<dt><em>Attribute_Definition:</em>  Feature geometry.</dt>
+<dt><em>Attribute_Definition_Source:</em>  Esri</dt>
+<dt><em>Attribute_Domain_Values:</em>  
+<dd>
+<dl>
+<dt><em>Unrepresentable_Domain:</em>  Coordinates defining the features.</dt>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt><em>Attribute:</em>  
+<dd>
+<dl>
+<dt><em>Attribute_Label:</em>  SITE_CODE</dt>
+</dl>
+</dd>
+<dt><em>Attribute:</em>  
+<dd>
+<dl>
+<dt><em>Attribute_Label:</em>  COUNTY</dt>
+</dl>
+</dd>
+<dt><em>Attribute:</em>  
+<dd>
+<dl>
+<dt><em>Attribute_Label:</em>  WSE_F15_10</dt>
+</dl>
+</dd>
+<dt><em>Attribute:</em>  
+<dd>
+<dl>
+<dt><em>Attribute_Label:</em>  F15_10_Kri</dt>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<a name="5">
+</a>
+<hr/>
+<dl>
+<dt><em>Metadata_Reference_Information:</em>  
+<dd>
+<dl>
+<dt><em>Metadata_Date:</em>  20161114</dt>
+<dt><em>Metadata_Standard_Name:</em>  FGDC Content Standard for Digital Geospatial Metadata</dt>
+<dt><em>Metadata_Standard_Version:</em>  FGDC-STD-001-1998</dt>
+<dt><em>Metadata_Time_Convention:</em>  local time</dt>
+</dl>
+</dd>
+</dl>
+
+<hr/>
+Generated by <a href="http://geology.usgs.gov/tools/metadata/tools/doc/mp.html"><tt>mp</tt></a> version 2.9.12 on Mon Nov 14 15:32:26 2016<br/>
+
+</body>
+</html>

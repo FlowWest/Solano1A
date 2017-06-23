@@ -11,8 +11,12 @@ navbarPage(
                       model_awUI('one')),
              tabPanel(title = 'Crops',
                       cropsUI('one'))),
-  tabPanel(title = 'Ground Water',
-           ground_waterUI('one')),
+  navbarMenu(title = 'Ground Water',
+             tabPanel(title = 'Elevation Change',
+                      elevation_changeUI('one')),
+             tabPanel(title = 'Demand',
+                      demandUI('one'))
+                      ),
   tabPanel(title = 'Water Balance',
            water_balanceUI('one'))
 )

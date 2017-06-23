@@ -4,7 +4,7 @@ model_awUI <- function(id) {
   tagList(
     fluidRow(
       column(width = 6,
-             tags$h2('Modeled Applied Water Dmand (AF/acre)'),
+             tags$h2('Modeled Applied Water Demand (AF/acre)'),
              tags$h6('blah blah blah')),
       column(width = 6,
              fluidRow(
@@ -33,7 +33,8 @@ model_aw <- function(input, output, session) {
       addProviderTiles(providers$Esri.WorldImagery, group = 'Satelite') %>%
       addRasterImage(CUP_2010, group = '2010', colors = pal) %>% 
       addRasterImage(CUP_2015, group = '2015', colors = pal) %>% 
-      addLayersControl(baseGroups = c('Map', 'Dark Map', 'Satelite'), overlayGroups = c('2010', '2015'),
+      addPolygons(data = county, group = 'Solano County', color = '#666666', fill = FALSE) %>% 
+      addLayersControl(baseGroups = c('Map', 'Dark Map', 'Satelite'), overlayGroups = c('2010', '2015', 'Solano County'),
                        options = layersControlOptions(collapsed = FALSE)) %>% 
       hideGroup('2015') 
   })

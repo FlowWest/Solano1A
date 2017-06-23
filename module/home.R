@@ -13,7 +13,7 @@ homeUI <- function(id) {
       column(width = 12, id = 'credits',
              tags$a(tags$img(src = 'greylogo.png', width = '175px', style = 'display:inline-block;'),
                     href = 'http://www.flowwest.com/', target = '_blank'),
-             tags$h4('App created and maintained by:', tags$a(href = 'mailto:erodriguez@flowwest.com', 'Emanuel Rodriguez', target = '_blank'),
+             tags$h5('App created and maintained by:', tags$a(href = 'mailto:erodriguez@flowwest.com', 'Emanuel Rodriguez', target = '_blank'),
                      'and', tags$a(href = 'mailto:sgill@flowwest.com', 'Sadie Gill', target = '_blank'), 
                      style = 'display:inline-block; margin-left:15px;'),
              tags$a(tags$img(src = 'GitHub-Mark-32px.png'), href = 'https://github.com/FlowWest/Solano1A', target = '_blank', style = 'margin-left:15px;')

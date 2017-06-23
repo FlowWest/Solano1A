@@ -1,0 +1,26 @@
+[general]
+creator=R package 'raster'
+created=2017-06-22 16:59:34
+[georeference]
+nrows=1847
+ncols=2337
+xmin=-13626535.582561
+ymin=4583848.35321035
+xmax=-13535582.7747752
+ymax=4655876.32518778
+projection=+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs
+[data]
+datatype=FLT8S
+byteorder=little
+nbands=1
+bandorder=BIL
+categorical=FALSE
+minvalue=-15.672393481763
+maxvalue=-0.965053889351685
+nodatavalue=-1.7e+308
+[legend]
+legendtype=
+values=
+color=
+[description]
+layername=Co_s15to10_KS
