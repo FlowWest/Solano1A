@@ -10,8 +10,8 @@ homeUI <- function(id) {
              )
     ),
     fluidRow(
-      column(width = 12, id = 'credits',
-             tags$a(tags$img(src = 'greylogo.png', width = '175px', style = 'display:inline-block;'),
+      column(width = 12, id = 'credits', style = 'margin-top:10px;',
+             tags$a(tags$img(src = 'TransLogoTreb.png', width = '200px', style = 'display:inline-block;'),
                     href = 'http://www.flowwest.com/', target = '_blank'),
              tags$h5('App created and maintained by:', tags$a(href = 'mailto:erodriguez@flowwest.com', 'Emanuel Rodriguez', target = '_blank'),
                      'and', tags$a(href = 'mailto:sgill@flowwest.com', 'Sadie Gill', target = '_blank'), 

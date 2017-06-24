@@ -1,5 +1,6 @@
 navbarPage(
-  title = 'Solano County',
+  title = div(tags$img(src = 'thick_elder.png', width = 95), 'Solano County'),
+  windowTitle = 'Solano County',
   theme = shinytheme(theme = 'paper'),
   header = includeCSS('styles.css'),
   tabPanel(title = 'Home',
