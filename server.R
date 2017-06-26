@@ -4,4 +4,5 @@ shinyServer(function(input, output) {
   callModule(demand, 'one')
   callModule(elevation_change, 'one')
   callModule(model_aw, 'one')
+  callModule(crops, 'one')
 })

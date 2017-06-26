@@ -3,13 +3,53 @@ cropsUI <- function(id) {
   
   tagList(
     fluidRow(
-      column(width = 12,
-             tags$h2('Crops'))
+      column(width = 6,
+             tags$h2('Crops')),
+      column(width = 6,
+             tabsetPanel(
+               tabPanel('Area',
+                        withSpinner(plotlyOutput(ns('crop_areas'), height = 725), type = 8, color = '#666666')),
+               tabPanel('Demand',
+                        withSpinner(plotlyOutput(ns('crop_demands'), height = 725), type = 8, color = '#666666'))
+             ))
     )
   )
 }
 
 crops <- function(input, output, session) {
+  
+  output$crop_areas <- renderPlotly({
+    crop_acres %>% 
+      plot_ly(y = ~`2015 Summary Crop Type`, x = ~`Total Area (acres) in Solano County for 2010`, type = 'bar', name = '2010',
+              orientation = 'h', hoverinfo = 'text', marker = list(color = 'rgba(136,65,157, 1)'),
+              text = ~paste('2010', `2015 Summary Crop Type`, '<br>', 
+                            'Total Acres', pretty_num(`Total Area (acres) in Solano County for 2010`, 0))) %>% 
+      add_bars(x = ~`Total Area (acres) in Solano County for 2015`, name = '2015', marker = list(color = 'rgba(140,150,198, 1)'),
+               hoverinfo = 'text', 
+               text = ~paste('2015', `2015 Summary Crop Type`, '<br>', 
+                             'Total Acres', pretty_num(`Total Area (acres) in Solano County for 2015`, 0), '<br>', 
+                             'Change in Acres', pretty_num(`Change in Summary Crop Acreage (2015--2010)`, 0))) %>% 
+      layout(yaxis = list(title = ''), xaxis = list(title = 'Solano County Total Area (acres)'),
+             margin = list(l = 175)) %>% 
+      config(displayModeBar = FALSE)
+  })
+  
+  output$crop_demands <- renderPlotly({
+    crop_demand %>% 
+      plot_ly(y = ~`2015 Summary Crop Type`, x = ~`2010 Total Agricultural Applied Water Demand (acre-feet / year)`, type = 'bar', name = '2010',
+              orientation = 'h', hoverinfo = 'text', marker = list(color = 'rgba(136,65,157, 1)'),
+              text = ~paste('2010', `2015 Summary Crop Type`, '<br>',
+                            'Demand', pretty_num(`2010 Total Agricultural Applied Water Demand (acre-feet / year)`, 0), 'AF/year')) %>% 
+      add_bars(x = ~`2015 Total Agricultural Applied Water Demand (acre-feet / year)`, name = '2015', 
+               marker = list(color = 'rgba(140,150,198, 1)'),
+               hoverinfor = 'text',
+               text = ~paste('2015', `2015 Summary Crop Type`, '<br>',
+                             'Demand', pretty_num(`2015 Total Agricultural Applied Water Demand (acre-feet / year)`, 0), 'AF/year', '<br>',
+                             'Change in Demand', pretty_num(`Change in Applied Water Demand  (2015--2010)`, 0), 'AF/year')) %>% 
+      layout(yaxis = list(title = ''), xaxis = list(title = 'Solano County Total Agricultural Applied Water Demand (acre-feet / year)'),
+             margin = list(l = 175)) %>% 
+      config(displayModeBar = FALSE)
+  })
   
 }
 
