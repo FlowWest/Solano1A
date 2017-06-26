@@ -30,8 +30,8 @@ county <- rgdal::readOGR('data/county_boundaries/countyboundarypoly.shp', string
 ROIs <- rgdal::readOGR('data/ROI/solano_ROI.shp', stringsAsFactors = FALSE) %>% 
   spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
 
-deliv_entities <- rgdal::readOGR('data/mgmt_entities_delivery/mgmt_ents.shp', 
-                                 stringsAsFactors = FALSE) %>% 
+deliv_entities <- rgdal::readOGR('data/mgmt_entities_delivery/mgmt_ents.shp',
+                                 stringsAsFactors = FALSE) %>%
   spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
 
 groundwater_basins <- rgdal::readOGR('data/B118_CA_GroundwaterBasins_Revised2016/i08_B118_CA_GroundwaterBasins.shp', stringsAsFactors = FALSE) %>% 
