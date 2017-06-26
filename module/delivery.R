@@ -34,7 +34,7 @@ deliveryUI <- function(id) {
              ), 
              fluidRow(
                tabsetPanel(
-                 tabPanel(title = "Demand", 
+                 tabPanel(title = "Summary", 
                           DT::dataTableOutput(ns("delivery_summary")))
                ))))
     )
@@ -115,7 +115,10 @@ delivery <- function(input, output, session) {
     )
     summ <- summary_data() %>% dplyr::select(-c(`Water Resources Management Entity`, 
                                                shape_ref_attr))
-    return(summ)
+    summ$percent_of_total <- pretty_num(summ$percent_of_total * 100)
+    colnames(summ) <- c("Year", "Delivery Type", "Delivered Amount", "Year Total", "Percent of Total")
+    return(DT::datatable(summ, options = list(dom = 't', 
+                                              columnDefs = list(list(className = 'dt-center', targets = 4)))))
   })
   
   # leaflet proxy redraws hover piece from plotly delivery plot
