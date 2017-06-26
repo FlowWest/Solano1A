@@ -8,6 +8,7 @@ library(leaflet)
 library(rgdal)
 library(raster)
 library(sp)
+library(readxl)
 
 source('module/home.R')
 source('module/delivery.R')
@@ -37,8 +38,12 @@ groundwater_basins <- rgdal::readOGR('data/B118_CA_GroundwaterBasins_Revised2016
   spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs")) %>% 
   subset(Basin_Subb %in% c('2-002.03', '2-003', '5-021.66'))
 
+# crop data
+crop_acres <- read_excel('raw-data/crops_2010_2015.xlsx', sheet = "2015 v 2010 Acres")
+crop_demand <- read_excel('raw-data/crops_2010_2015.xlsx', sheet = "2015 v 2010 Demand")
+
 # modeled applied water demand
-CUP_2010 <- raster::raster('data/cup2010/2010_CUP.tif')
+CUP_2010 <- raster::raster('data/cup2010/2010_CUP.tif') 
 CUP_2015 <- raster::raster('data/cup2015/2015_CUP.tif')
 
 # groundwater

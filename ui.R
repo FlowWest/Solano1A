@@ -1,5 +1,6 @@
 navbarPage(
   title = div(tags$img(src = 'thick_elder.png', width = 95), 'Solano County'),
+  collapsable = TRUE,
   windowTitle = 'Solano County',
   theme = shinytheme(theme = 'paper'),
   header = includeCSS('styles.css'),
