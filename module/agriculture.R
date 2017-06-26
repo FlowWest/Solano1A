@@ -4,7 +4,7 @@ cropsUI <- function(id) {
   tagList(
     fluidRow(
       column(width = 6,
-             tags$h2('Crops'),
+             tags$h4('Crops'),
              tags$br(),
              tags$p('We used the California Department of Water Resources Consumptive Use Program PLUS (CUP+ Version 6.81; 
                     Orang, M. et al., 2016) to estimate applied water for agricultural crops in Solano County for 2010 and 
@@ -75,7 +75,7 @@ model_awUI <- function(id) {
   tagList(
     fluidRow(
       column(width = 6,
-             tags$h2('Modeled Agricultural Applied Water Demand (AF/acre)'),
+             tags$h4('Modeled Agricultural Applied Water Demand (AF/acre)'),
              tags$br(),
              tags$p('We used the California Department of Water Resources Consumptive Use Program PLUS 
                     (CUP+ Version 6.81; Orang, M. et al., 2016) to estimate applied water for agricultural 
@@ -141,7 +141,7 @@ demandUI <- function(id) {
   tagList(
     fluidRow(
       column(width = 6,
-             tags$h2('Modeled Agricultural Applied Water Demand (AF/acre)'),
+             tags$h4('Modeled Agricultural Applied Water Demand (AF/acre)'),
              tags$br(),
              tags$p('We used the California Department of Water Resources Consumptive Use Program PLUS 
                     (CUP+ Version 6.81; Orang, M. et al., 2016) to estimate applied water for agricultural 
