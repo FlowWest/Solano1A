@@ -10,10 +10,10 @@ homeUI <- function(id) {
              )
     ),
     fluidRow(
-      column(width = 12, id = 'credits',
-             tags$a(tags$img(src = 'greylogo.png', width = '175px', style = 'display:inline-block;'),
+      column(width = 12, id = 'credits', style = 'margin-top:10px;',
+             tags$a(tags$img(src = 'TransLogoTreb.png', width = '200px', style = 'display:inline-block;'),
                     href = 'http://www.flowwest.com/', target = '_blank'),
-             tags$h4('App created and maintained by:', tags$a(href = 'mailto:erodriguez@flowwest.com', 'Emanuel Rodriguez', target = '_blank'),
+             tags$h5('App created and maintained by:', tags$a(href = 'mailto:erodriguez@flowwest.com', 'Emanuel Rodriguez', target = '_blank'),
                      'and', tags$a(href = 'mailto:sgill@flowwest.com', 'Sadie Gill', target = '_blank'), 
                      style = 'display:inline-block; margin-left:15px;'),
              tags$a(tags$img(src = 'GitHub-Mark-32px.png'), href = 'https://github.com/FlowWest/Solano1A', target = '_blank', style = 'margin-left:15px;')
@@ -23,14 +23,18 @@ homeUI <- function(id) {
 
 home <- function(input, output, session) {
 
-  pal <- colorFactor(palette = 'Dark2', domain = ROIs$Name)
+  pal <- colorFactor(palette = 'Dark2', domain = deliv_entities$Name)
+  pal2 <- colorFactor(palette = 'Dark2', domain = groundwater_basins$Basin_Name)
+  
   output$ROI <- renderLeaflet({
     leaflet() %>% 
-      addProviderTiles(providers$Thunderforest.Outdoors, group = 'Map') %>% 
+      addProviderTiles(providers$CartoDB.Positron, group = 'Map') %>% 
       addProviderTiles(providers$Esri.WorldImagery, group = 'Satelite') %>% 
-      addPolygons(data = ROIs, color = ~pal(Name), group = 'Name', label = ~Name, 
-                  popup = ~paste('<b>', Name, '</b>', '<br>', pretty_num(Acres, 0), ' Acres')) %>% 
-      addLayersControl(baseGroups = c('Map', 'Satelite'), overlayGroups = c('Name'))
+      addPolygons(data = county, group = 'Solano County', color = '#666666', fill = FALSE) %>% 
+      addPolygons(data = groundwater_basins, label = ~Basin_Name, color = ~pal2(Basin_Name), group = 'Groundwater Basins') %>% 
+      addPolygons(data = deliv_entities, color = ~pal(Name), weight = 2, 
+                  label = ~Name, group = 'Delivery Entity') %>% 
+      addLayersControl(baseGroups = c('Map', 'Satelite'), overlayGroups = c('Delivery Entity', 'Solano County', 'Groundwater Basins'))
   })  
 }
 

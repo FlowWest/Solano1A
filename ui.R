@@ -1,5 +1,6 @@
 navbarPage(
-  title = 'Solano County',
+  title = div(tags$img(src = 'thick_elder.png', width = 95), 'Solano County'),
+  windowTitle = 'Solano County',
   theme = shinytheme(theme = 'paper'),
   header = includeCSS('styles.css'),
   tabPanel(title = 'Home',
@@ -7,12 +8,14 @@ navbarPage(
   tabPanel(title = 'Deliveries',
            deliveryUI('one')),
   navbarMenu(title = 'Agriculture',
-             tabPanel(title = 'Modeled Applied Water Demand',
-                      model_awUI('one')),
              tabPanel(title = 'Crops',
-                      cropsUI('one'))),
-  tabPanel(title = 'Ground Water',
-           ground_waterUI('one')),
+                      cropsUI('one')),
+             tabPanel(title = 'Water Demand - By Crop Type',
+                      model_awUI('one')),
+             tabPanel(title = 'Water Demand - By Entity or Region',
+                      demandUI('one'))),
+  tabPanel(title = 'Groundwater',
+           elevation_changeUI('one')),
   tabPanel(title = 'Water Balance',
            water_balanceUI('one'))
 )

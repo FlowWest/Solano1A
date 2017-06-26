@@ -1,0 +1,108 @@
+﻿<metadata>
+  <idinfo>
+    <citation>
+      <citeinfo>
+        <title>Groundwater Elevation Change at CASGEM Wells: Spring 2010 to Spring 2015</title>
+        <geoform>vector digital data</geoform>
+      </citeinfo>
+    </citation>
+    <descript>
+      <abstract>Groundwater elevation change (in feet) from spring 2010 to spring 2015 from CASGEM well records, with groundwater elevation change at point locations from interpolated surface. Created for the Solano County Water Resources Study completed in 2016. Created by: Anna Constantino, FlowWest, aconstantino@flowwest.com</abstract>
+      <purpose>We used CASGEM well records to create interpolated surfaces of groundwater elevation change across Solano County for Spring and Fall seasons from 2010 to 2015. We defined the Spring season measurements as the median of April measurements at each well (in cases where there were multiply April measurements), and if there were no April well records, then we used the latest measurement in March or the earliest measurement in May. To define the Fall season, we followed a similar pattern using October measurements when possible, and if not the latest in September or earliest in November. We did this analysis for all wells within a 10 mile buffer around Solano County. We differenced the respective Fall and Spring measurements from wells with measurements in both 2010 and 2015, and created two datasets of groundwater elevation change per season from 2010 to 2015. This difference is documented in the field "WSE_S15_10" in units of feet. 
+
+We used the Kriging tool in ArcMap (Ordinary; Spherical semivariogram model) to interpolate a surface of groundwater change from the point data. This process smooths out the actual input data points, and therefore the interpolated surface is best used to identify broad trends across the County—particularly given the small sample size given the spatial extent of the interpolation. The pixel value of groundwater elevation change from the interpolated raster surface that overlays the point well location was added to this shapefile to help evaluate the accuracy of the interpolated surface. The Kriging-interpolated groundwater elevation change is documented in the field "S15_10_Kri" in units of feet.</purpose>
+    </descript>
+    <spdom>
+      <bounding>
+        <westbc>-122.559183</westbc>
+        <eastbc>-121.471056</eastbc>
+        <northbc>38.672464</northbc>
+        <southbc>37.961869</southbc>
+      </bounding>
+    </spdom>
+    <accconst>None</accconst>
+    <useconst>None</useconst>
+    <native>Microsoft Windows 7 Version 6.1 (Build 7601) Service Pack 1; Esri ArcGIS 10.3.0.4322</native>
+  </idinfo>
+  <spdoinfo>
+    <direct>Vector</direct>
+    <ptvctinf>
+      <sdtsterm>
+        <sdtstype>Entity point</sdtstype>
+        <ptvctcnt>81</ptvctcnt>
+      </sdtsterm>
+    </ptvctinf>
+  </spdoinfo>
+  <spref>
+    <horizsys>
+      <planar>
+        <mapproj>
+          <mapprojn>NAD 1983 StatePlane California II FIPS 0402 Feet</mapprojn>
+          <lambertc>
+            <stdparll>38.33333333333334</stdparll>
+            <stdparll>39.83333333333334</stdparll>
+            <longcm>-122.0</longcm>
+            <latprjo>37.66666666666666</latprjo>
+            <feast>6561666.666666666</feast>
+            <fnorth>1640416.666666667</fnorth>
+          </lambertc>
+        </mapproj>
+        <planci>
+          <plance>coordinate pair</plance>
+          <coordrep>
+            <absres>0.000000027039137595608057</absres>
+            <ordres>0.000000027039137595608057</ordres>
+          </coordrep>
+          <plandu>foot_us</plandu>
+        </planci>
+      </planar>
+      <geodetic>
+        <horizdn>D North American 1983</horizdn>
+        <ellips>GRS 1980</ellips>
+        <semiaxis>6378137.0</semiaxis>
+        <denflat>298.257222101</denflat>
+      </geodetic>
+    </horizsys>
+  </spref>
+  <eainfo>
+    <detailed>
+      <enttyp>
+        <enttypl>s2015_to_s2010</enttypl>
+      </enttyp>
+      <attr>
+        <attrlabl>FID</attrlabl>
+        <attrdef>Internal feature number.</attrdef>
+        <attrdefs>Esri</attrdefs>
+        <attrdomv>
+          <udom>Sequential unique whole numbers that are automatically generated.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Shape</attrlabl>
+        <attrdef>Feature geometry.</attrdef>
+        <attrdefs>Esri</attrdefs>
+        <attrdomv>
+          <udom>Coordinates defining the features.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>SITE_CODE</attrlabl>
+      </attr>
+      <attr>
+        <attrlabl>COUNTY</attrlabl>
+      </attr>
+      <attr>
+        <attrlabl>WSE_S15_10</attrlabl>
+      </attr>
+      <attr>
+        <attrlabl>S15_10_Kri</attrlabl>
+      </attr>
+    </detailed>
+  </eainfo>
+  <metainfo>
+    <metd>20161114</metd>
+    <metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+    <metstdv>FGDC-STD-001-1998</metstdv>
+    <mettc>local time</mettc>
+  </metainfo>
+</metadata>
