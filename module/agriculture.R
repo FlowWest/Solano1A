@@ -4,7 +4,23 @@ cropsUI <- function(id) {
   tagList(
     fluidRow(
       column(width = 6,
-             tags$h2('Crops')),
+             tags$h2('Crops'),
+             tags$br(),
+             tags$p('We used the California Department of Water Resources Consumptive Use Program PLUS (CUP+ Version 6.81; 
+                    Orang, M. et al., 2016) to estimate applied water for agricultural crops in Solano County for 2010 and 
+                    2015 (as mapped by the U.S Department of Agriculture’s CropScape program). The inputs to the CUP+ model 
+                    are climate, crop, and soil data, and the model calculates annual applied water per unique combination
+                    of crop and soil type for a given year of climate data, which can vary depending on climatic factors such 
+                    as solar radiation, temperature, humidity, wind, and precipitation. Results are given as evotranspiration
+                    of applied water (ETaw), which is an estimate of the net applied water required to produce a given crop 
+                    under the defined soil and climatic conditions.'),
+             tags$p('This tab shows crop acreages and model results for the most significant crop types in terms of acreage
+                    in the County. It is important to note the potential changes within applied water demand for a single
+                    crop type. For example, the evapotranspirative applied water demand for almonds increased from 2.02 
+                    acre-feet/acre in 2010 to 2.49 acre-feet/acre in 2015. This highlights how changes in climate can impact 
+                    the required water for a given crop. Certain crops, however, did not demonstrate as much sensitivity to 
+                    climate. For example, grain crop evapotranspirative applied water demand changed very slightly from 2010 to
+                    2015 in spite of different climate conditions.')),
       column(width = 6,
              tabsetPanel(
                tabPanel('Area',
@@ -60,7 +76,19 @@ model_awUI <- function(id) {
     fluidRow(
       column(width = 6,
              tags$h2('Modeled Agricultural Applied Water Demand (AF/acre)'),
-             tags$h6('blah blah blah')),
+             tags$br(),
+             tags$p('We used the California Department of Water Resources Consumptive Use Program PLUS 
+                    (CUP+ Version 6.81; Orang, M. et al., 2016) to estimate applied water for agricultural 
+                    crops in Solano County for 2010 and 2015 (as mapped by the U.S Department of Agriculture’s 
+                    CropScape program). The inputs to the CUP+ model are climate, crop, and soil data, and the 
+                    model calculates annual applied water per unique combination of crop and soil type for a given
+                    year of climate data, which can vary depending on climatic factors such as solar radiation, 
+                    temperature, humidity, wind, and precipitation. Results are given as evotranspiration of 
+                    applied water (ETaw), which is an estimate of the net applied water required to produce a given 
+                    crop under the defined soil and climatic conditions.'),
+             tags$p('We integrated the CUP+ applied water results in a Geographic Information System (GIS) to 
+                    facilitate comparisons between agricultural water demand and water deliveries (surface and groundwater) 
+                    within water resources management entity service areas in the County.')),
       column(width = 6,
              fluidRow(
                column(width = 12,
@@ -114,7 +142,19 @@ demandUI <- function(id) {
     fluidRow(
       column(width = 6,
              tags$h2('Modeled Agricultural Applied Water Demand (AF/acre)'),
-             tags$h6('blah blah blah')),
+             tags$br(),
+             tags$p('We used the California Department of Water Resources Consumptive Use Program PLUS 
+                    (CUP+ Version 6.81; Orang, M. et al., 2016) to estimate applied water for agricultural 
+                    crops in Solano County for 2010 and 2015 (as mapped by the U.S Department of Agriculture’s 
+                    CropScape program). The inputs to the CUP+ model are climate, crop, and soil data, and the 
+                    model calculates annual applied water per unique combination of crop and soil type for a given
+                    year of climate data, which can vary depending on climatic factors such as solar radiation, 
+                    temperature, humidity, wind, and precipitation. Results are given as evotranspiration of 
+                    applied water (ETaw), which is an estimate of the net applied water required to produce a given 
+                    crop under the defined soil and climatic conditions.'),
+             tags$p('We integrated the CUP+ applied water results in a Geographic Information System (GIS) to 
+                    facilitate comparisons between agricultural water demand and water deliveries (surface and groundwater) 
+                    within water resources management entity service areas in the County.')),
       column(width = 6,
              withSpinner(leafletOutput(ns('roi_map'), height=750), type = 8, color = '#666666'))
     )
