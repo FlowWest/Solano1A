@@ -18,6 +18,7 @@ source('module/water_balance.R')
 
 applied_demand <- read_rds("data/delivery/applied_water_demand.rds")
 solano_deliveries <- read_rds("data/delivery/solano_county_deliveries.rds")
+percent_delivered <- read_csv("raw-data/percent_deliveries_updated.csv")
 
 sub_basin <- rgdal::readOGR('data/solano_subbasin/solano_subasin2016.shp', stringsAsFactors = FALSE) %>% 
   spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))

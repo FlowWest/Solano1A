@@ -99,9 +99,33 @@ solano_deliveries$shape_ref_attr <- shape_attribute
 # write out this new dataset 
 write_rds(solano_deliveries, "data/delivery/solano_county_deliveries.rds")
 
+# linking the demand with the delivery 
 
+# the names in the deliveries, and demand
+solano_deliveries$`Water Resources Management Entity` %>% unique()
+applied_demand$Boundary %>% unique()
 
+# summary statistics 
+# total water delivered 
+solano_deliveries %>% 
+  filter(`Water Resources Management Entity` == 'SID') %>% 
+  group_by(year) %>% 
+  summarise(
+    year_total = sum(value)
+  ) %>% ungroup() 
 
+entity_summary <- function(.d) {
+  year_totals <- .d %>% 
+    group_by(`Water Resources Management Entity`, year) %>% 
+    summarise(
+      year_total = sum(value)
+    ) %>% ungroup() %>% dplyr::select(`Water Resources Management Entity`,year, year_total)
+    
+  percent_of_total <- left_join(.d, year_totals) %>% 
+    mutate(percent_of_total = value / year_total)
+  
+  return(percent_of_total)
+}
 
 
 

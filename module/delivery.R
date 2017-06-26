@@ -1,3 +1,18 @@
+deliv_pal <- colorFactor(palette = 'Accent', domain = deliv_entities$Name)
+
+entity_summary <- function(.d) {
+  year_totals <- .d %>% 
+    group_by(`Water Resources Management Entity`, year) %>% 
+    summarise(
+      year_total = sum(value)
+    ) %>% ungroup() %>% dplyr::select(`Water Resources Management Entity`,year, year_total)
+  
+  percent_of_total <- left_join(.d, year_totals) %>% 
+    mutate(percent_of_total = value / year_total)
+  
+  return(percent_of_total)
+}
+
 # UI ----------------------------------------------------------------------------
 deliveryUI <- function(id) {
   ns <- NS(id)
@@ -20,14 +35,9 @@ deliveryUI <- function(id) {
              fluidRow(
                tabsetPanel(
                  tabPanel(title = "Demand", 
-                          uiOutput(ns("blah")))
-               )
-               
-             )
-      )
+                          DT::dataTableOutput(ns("delivery_summary")))
+               ))))
     )
-    
-  )
 }
 
 # Server ----------------------------------------------------------------------
@@ -47,10 +57,24 @@ delivery <- function(input, output, session) {
   
   deliveries <- reactive({
     if (is.null(map_events$clicked_shape)) {
-      return(solano_deliveries)
+      return(solano_deliveries %>% 
+               unite(reporting_type, water_type, year, remove = FALSE, sep = " "))
+      
     }
     solano_deliveries %>% 
-      filter(shape_ref_attr == map_events$clicked_shape)
+      filter(shape_ref_attr == map_events$clicked_shape) %>% 
+      unite(reporting_type, water_type, year, remove = FALSE, sep = " ")
+  })
+  
+  summary_data <- reactive({
+    if (is.null(map_events$clicked_shape)) {
+      return(solano_deliveries %>% 
+               entity_summary())
+      
+    }
+    solano_deliveries %>% 
+      filter(shape_ref_attr == map_events$clicked_shape) %>% 
+      entity_summary()
   })
   
   selected_ents <- reactive({
@@ -64,30 +88,41 @@ delivery <- function(input, output, session) {
   # need to figure out spatial component to delivery data
   output$delivery_map <- renderLeaflet({
     leaflet() %>% 
-      addProviderTiles(providers$Thunderforest.Outdoors, group = 'Map') %>% 
+      addProviderTiles(providers$CartoDB.Positron, group = 'Map') %>% 
       addProviderTiles(providers$Esri.WorldImagery, group = 'Satelite') %>% 
       # basic polygon added needs work!
-      addPolygons(data = deliv_entities, fillColor=~Name, 
+      addPolygons(data = deliv_entities, 
+                  color = ~deliv_pal(Name), 
+                  fill = TRUE, 
                   layerId=~Name, weight = 2, 
-                  label = ~Name) %>% 
+                  label = ~Name, fillOpacity = .6) %>% 
       addLayersControl(baseGroups = c('Map', 'Satelite'))
   })
   
   output$deliver_plot <- renderPlotly({
     deliveries() %>% 
       mutate(entity_labels = abbreviate(`Water Resources Management Entity`, minlength = 15)) %>% 
-      plot_ly(x=~entity_labels, y=~value, color=~year, 
-              type='bar', colors = "Set2", source = 'source', key = ~shape_ref_attr) %>% 
+      plot_ly(x=~entity_labels, y=~value, color=~reporting_type, 
+              type='bar', colors = "Dark2", source = 'source', key = ~shape_ref_attr) %>% 
       layout(xaxis = list(title="", tickangle = -45, ticklen = 1, tickfont = 5),
              margin = list(pad = 0, b = 90), 
              dragmode = "zoom")
+  })
+  
+  output$delivery_summary <- DT::renderDataTable({
+    validate(
+      need(!is.null(map_events$clicked_shape), "Select a delivery entity")
+    )
+    summ <- summary_data() %>% dplyr::select(-c(`Water Resources Management Entity`, 
+                                               shape_ref_attr))
+    return(summ)
   })
   
   # leaflet proxy redraws hover piece from plotly delivery plot
   observe({
     leafletProxy("delivery_map", data = selected_ents()) %>% 
       clearGroup("hl_layer") %>% 
-      addPolygons(fill = FALSE, color = '#c79ed1',
+      addPolygons(fill = FALSE, color = '#666666',
                   opacity = 1, group = "hl_layer") 
   })
   
