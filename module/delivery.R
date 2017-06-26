@@ -18,11 +18,15 @@ deliveryUI <- function(id) {
                )
              ), 
              fluidRow(
-               tabPanel(title = "Demand")
+               tabsetPanel(
+                 tabPanel(title = "Demand", 
+                          uiOutput(ns("blah")))
+               )
+               
              )
-             )
+      )
     )
-
+    
   )
 }
 
@@ -79,10 +83,11 @@ delivery <- function(input, output, session) {
              dragmode = "zoom")
   })
   
+  # leaflet proxy redraws hover piece from plotly delivery plot
   observe({
     leafletProxy("delivery_map", data = selected_ents()) %>% 
       clearGroup("hl_layer") %>% 
-      addPolygons(fill = FALSE, color = '#FFFF00',
+      addPolygons(fill = FALSE, color = '#c79ed1',
                   opacity = 1, group = "hl_layer") 
   })
   
