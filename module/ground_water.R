@@ -63,7 +63,7 @@ elevation_changeUI <- function(id) {
   tagList(
     fluidRow(
       column(width = 6,
-             tags$h2('Groundwater Elevation Change (ft)')),
+             tags$h4('Groundwater Elevation Change (ft)')),
       column(width = 6,
              tabsetPanel(
                          tabPanel('Fall',
