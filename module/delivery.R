@@ -1,4 +1,3 @@
-deliv_pal <- colorFactor(palette = 'Accent', domain = deliv_entities$Name)
 
 entity_summary <- function(.d) {
   year_totals <- .d %>% 
@@ -20,11 +19,37 @@ deliveryUI <- function(id) {
   tagList(
     # top row host map
     fluidRow(
-      column(width = 6, 
+      column(width = 3, 
+             tags$h3("Solano County Water Delivery"),
+             tags$p("Delivered water is defined here as the volume of water provided 
+                    by a water resources management entity to meet a water demand. 
+                    In this evaluation, delivered water is expressed annually for 2010
+                    and 2015. This page shows 2010 and 2015 annual total water 
+                    deliveries for the water resources management entities that 
+                    provided data, and the breakdown between surface water and 
+                    groundwater within those deliveries. In 2010, approximately 
+                    295,000 acre-feet were delivered to users in Solano County, 
+                    and approximately 10% of this was derived from groundwater. 
+                    Total reported delivery increased in 2015 to approximately 328,000 
+                    acre-feet with approximately 9% derived from groundwater sources. 
+                    Agricultural water providers (Solano Irrigation District, 
+                    Reclamation District 2068, and Maine Prairie Water District) 
+                    deliver the most water in the County, and nearly all of their 
+                    delivered water is from surface sources. The City of Dixon 
+                    (including Cal Water Service area) is the largest groundwater delivery 
+                    entity in the County; SID, Vacaville, RNVWD, Travis AFB, and Rio Vista 
+                    also deliver groundwater. The City of Davis is outside of Solano County, 
+                    but was included in this summary (but not in County water balance totals 
+                    in the following sections) as it is immediately adjacent to the County and 
+                    has historically delivered a significant volume of groundwater. 
+                    Davis will be transitioning from groundwater to Sacramento River 
+                    surface water deliveries within the next few years, which could 
+                    change groundwater level conditions in northeastern Solano County. ")),
+      column(width = 4, 
              # need to figure out spatial component to delivery data
              withSpinner(leafletOutput(ns('delivery_map'), height = 800), 
-                         type = 8, color = '#666666')), 
-      column(width = 6, 
+                         type = 8, color = '#666666')),
+      column(width = 5, 
              fluidRow(
                tabsetPanel(
                  tabPanel(title = "Delivery", 
@@ -42,6 +67,9 @@ deliveryUI <- function(id) {
 
 # Server ----------------------------------------------------------------------
 delivery <- function(input, output, session) {
+  
+  deliv_pal <- colorFactor(palette = 'Accent', domain = deliv_entities$Name)
+  
   
   map_events <- reactiveValues(clikced_shape = NULL)
   
@@ -105,6 +133,7 @@ delivery <- function(input, output, session) {
       plot_ly(x=~entity_labels, y=~value, color=~reporting_type, 
               type='bar', colors = "Dark2", source = 'source', key = ~shape_ref_attr) %>% 
       layout(xaxis = list(title="", tickangle = -45, ticklen = 1, tickfont = 5),
+             yaxis = list(title="Delivered (ac-ft)"),
              margin = list(pad = 0, b = 90), 
              dragmode = "zoom")
   })
