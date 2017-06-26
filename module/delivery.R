@@ -71,7 +71,7 @@ delivery <- function(input, output, session) {
   deliv_pal <- colorFactor(palette = 'Accent', domain = deliv_entities$Name)
   
   
-  map_events <- reactiveValues(clikced_shape = NULL)
+  map_events <- reactiveValues(clicked_shape = NULL)
   
   # listen for a click on a shape file
   observeEvent(input$delivery_map_shape_click, {

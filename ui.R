@@ -15,8 +15,10 @@ navbarPage(
                       model_awUI('one')),
              tabPanel(title = 'Water Demand - By Entity or Region',
                       demandUI('one'))),
-  tabPanel(title = 'Groundwater',
-           elevation_changeUI('one')),
   tabPanel(title = 'Water Balance',
-           water_balanceUI('one'))
+           water_balanceUI('one')),
+  navbarMenu(title = 'Groundwater',
+             tabPanel(title = "Elevation Change", elevation_changeUI('one')), 
+             tabPanel(title = "CASGEM Data", casgem_dataUI('one'))
+           )
 )

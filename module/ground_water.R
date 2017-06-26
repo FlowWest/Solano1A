@@ -1,3 +1,62 @@
+casgem_dataUI <- function(id) {
+  ns <- NS(id) 
+  
+  tagList(
+    fluidRow(
+      column(width = 12, leafletOutput(ns("casgem_map")))
+    ), 
+    fluidRow(
+      column(width = 12, plotlyOutput(ns("casgem_plot")))
+    )
+  )
+}
+
+casgem_data <- function(input, output, session) {
+  
+  casgem_map_events <- reactiveValues(clicked_marker = NULL)
+  
+  # listen for a click on a shape file
+  observeEvent(input$casgem_map_marker_click, {
+    
+    casgem_map_events$clicked_marker <- input$casgem_map_marker_click$id
+    cat(casgem_map_events$clicked_marker)
+  })
+  
+  casgem_ts <- reactive({
+    casgem %>% 
+      filter(SITE_CODE == casgem_map_events$clicked_marker)
+  })
+  
+  output$casgem_map <- renderLeaflet({
+    leaflet() %>% 
+      addProviderTiles(providers$CartoDB.Positron) %>% 
+      addCircleMarkers(data=casgem_metadata, 
+                       clusterOptions = markerClusterOptions(), 
+                       color = "#666666", weight = 1, 
+                       fillColor = "#1f78b4", fillOpacity = .6, 
+                       layerId = ~SITE_CODE)
+  })
+  
+  output$casgem_plot <- renderPlotly({
+    # start up message
+    validate(
+      need(!is.null(casgem_map_events$clicked_marker), "Select well location above")
+    )
+    
+    # no data message
+    validate(need(nrow(casgem_ts() > 0), "No data found at selected location"))
+    
+    validate(need(sum(!is.na(casgem_ts()$wse)) > 0, "No data found at selected location"))
+    
+    casgem_ts() %>% 
+      plot_ly(x=~MEASUREMENT_DATE, y=~wse, type='scatter', mode='lines') %>% 
+      add_markers(y=~wse, marker=list(size=5, color="#666666")) %>% 
+      layout(xaxis=list(title=""), 
+             yaxis=list(title="Water Surface Elevation (ft)"))
+  })
+  
+}
+
 elevation_changeUI <- function(id) {
   ns <- NS(id)
   
