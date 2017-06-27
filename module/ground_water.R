@@ -10,7 +10,7 @@ casgem_dataUI <- function(id) {
   tagList(
     tags$h4("Groundwater Data", style="display: inline;"),
     tags$em(tags$p("available well data from Solano DWR Water Data Library and 
-           CASGEM database", style="display: inline;")),
+           CASGEM database", style="display: inline; font-size=14px;")),
     fluidRow(
       column(width = 12, leafletOutput(ns("casgem_map")))
     ), 
@@ -61,12 +61,21 @@ casgem_data <- function(input, output, session) {
  
     casgem_ts() %>%
       plot_ly(x=~MEASUREMENT_DATE, y=~wse, type='scatter', mode='lines',
-              connectgaps = TRUE, fill="tozeroy", 
-              fillcolor = 'rgba(31,120,180, 0.2)') %>%
-      add_markers(y=~wse, marker=list(size=2, color="#666666"), name=NULL) %>%
+              connectgaps = TRUE, 
+              line = list(color="rgb(124, 124, 124, .2)", width=1), 
+              showlegend = FALSE
+              #, 
+              #fill="tozeroy", 
+              #fillcolor = 'rgba(31,120,180, 0.2)'
+              ) %>%
+      add_markers(y=~wse, marker=list(color="#668ac4"), name="Water Surface Elevation", 
+                  showlegend = TRUE) %>%
+      add_lines(y= ~fitted(loess(wse ~ as.numeric(MEASUREMENT_DATE))), 
+                line = list(color="#b2df8a", width=5), name = "Fitted Trend (loess)", 
+                showlegend = TRUE) %>% 
       layout(xaxis=list(title=""),
              yaxis=list(title="Water Surface Elevation (ft)"),
-             showlegend = FALSE)
+             showlegend = TRUE)
   
   #   casgem_ts() %>% dplyr::select(MEASUREMENT_DATE, wse) %>% 
   #     to_xts_object() %>% 

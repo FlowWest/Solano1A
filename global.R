@@ -10,6 +10,7 @@ library(raster)
 library(sp)
 library(readxl)
 library(dygraphs)
+library(broom)
 
 source('module/home.R')
 source('module/delivery.R')
