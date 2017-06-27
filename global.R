@@ -46,6 +46,20 @@ groundwater_basins <- rgdal::readOGR('data/B118_CA_GroundwaterBasins_Revised2016
 crop_acres <- read_excel('raw-data/crops_2010_2015.xlsx', sheet = "2015 v 2010 Acres")
 crop_demand <- read_excel('raw-data/crops_2010_2015.xlsx', sheet = "2015 v 2010 Demand")
 
+awd_deliv_ent <- read_csv('raw-data/AppliedWaterDemand_updated.csv')
+sub_deliv_ent <- subset(deliv_entities, Acronym %in% c('MPWD', 'SID', 'RD 2068'))
+
+temp <- awd_deliv_ent %>% 
+  dplyr::rename(Acronym = Boundary) %>% 
+  dplyr::filter(Acronym %in% c('MPWD', 'SID', 'RD 2068'))
+
+sub_deliv_ent@data <- sub_deliv_ent@data %>% 
+  dplyr::left_join(temp)
+
+sub_basin@data <- bind_cols(sub_basin@data, awd_deliv_ent[2,])
+
+
+
 # modeled applied water demand
 CUP_2010 <- raster::raster('data/cup2010/2010_CUP.tif') 
 CUP_2015 <- raster::raster('data/cup2015/2015_CUP.tif')

@@ -23,12 +23,12 @@ homeUI <- function(id) {
                        entities across the County, and how those values changed between 2010 and 2015.'),
                tags$li(tags$b("Agriculture"), ' - Users can view agricultural applied water demand results from 
                        the CUP+ model and compare changes in acreage and demand by crop type between 2010 and 2015.'),
-               tags$li(tags$b("Groundwater"), ' - Shows how well records indicate greater decreases in groundwater 
-                       elevations along the northern extent of the County.'),
                tags$li(tags$b("Water Balance"), ' - By comparing water demand and deliveries, we developed 
                     an initial picture of the water balance in areas with and without water delivery systems in 2010 and
                        2015. The water balance indicates that county-wide water demand increased 6% from 2010 to 2015, 
-                       while county-wide water supply from groundwater increased by 9% over the same period')),
+                       while county-wide water supply from groundwater increased by 9% over the same period'),
+               tags$li(tags$b("Groundwater"), ' - Shows how well records indicate greater decreases in groundwater 
+                       elevations along the northern extent of the County.')),
              tags$br(),
              tags$a(tags$img(src = 'TransLogoTreb.png', width = '200px', style = 'display:inline-block;'),
                     href = 'http://www.flowwest.com/', target = '_blank'),
