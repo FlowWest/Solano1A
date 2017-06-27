@@ -19,6 +19,6 @@ navbarPage(
            water_balanceUI('one')),
   navbarMenu(title = 'Groundwater',
              tabPanel(title = "Elevation Change", elevation_changeUI('one')), 
-             tabPanel(title = "CASGEM Data", casgem_dataUI('one'))
+             tabPanel(title = "Well Data", casgem_dataUI('one'))
            )
 )

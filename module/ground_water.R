@@ -16,7 +16,8 @@ casgem_dataUI <- function(id) {
     ), 
     tags$br(),
     fluidRow(
-      column(width = 12, plotlyOutput(ns("casgem_plot")))
+      column(width = 12,
+             plotlyOutput(ns("casgem_plot")))
     )
   )
 }
@@ -48,7 +49,7 @@ casgem_data <- function(input, output, session) {
                        layerId = ~SITE_CODE)
   })
   
-  output$casgem_plot <- renderDygraph({
+  output$casgem_plot <- renderPlotly({
     # start up message
     validate(
       need(!is.null(casgem_map_events$clicked_marker), "Select well location above")
@@ -72,19 +73,11 @@ casgem_data <- function(input, output, session) {
                   showlegend = TRUE) %>%
       add_lines(y= ~fitted(loess(wse ~ as.numeric(MEASUREMENT_DATE))), 
                 line = list(color="#b2df8a", width=5), name = "Fitted Trend (loess)", 
-                showlegend = TRUE) %>% 
+                showlegend = TRUE) %>%
       layout(xaxis=list(title=""),
              yaxis=list(title="Water Surface Elevation (ft)"),
              showlegend = TRUE)
-  
-  #   casgem_ts() %>% dplyr::select(MEASUREMENT_DATE, wse) %>% 
-  #     to_xts_object() %>% 
-  #     dygraph() %>% 
-  #     dySeries('water surface elevation') %>% 
-  #     dyRangeSelector() %>% 
-  #     dyLegend(width = 500) %>% 
-  #     dyOptions(fillGraph = TRUE, drawGrid = FALSE)
-  # })
+
   
 })}
 

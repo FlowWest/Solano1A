@@ -141,9 +141,11 @@ demandUI <- function(id) {
   tagList(
     fluidRow(
       column(width = 6,
-             tags$h4('Modeled Agricultural Applied Water Demand (AF/acre)'),
-             tags$br(),
-             tags$p('We used the California Department of Water Resources Consumptive Use Program PLUS 
+             fluidRow(
+               column(width = 12, 
+                      tags$h4('Modeled Agricultural Applied Water Demand (AF/acre)'),
+                      tags$br(),
+                      tags$p('We used the California Department of Water Resources Consumptive Use Program PLUS 
                     (CUP+ Version 6.81; Orang, M. et al., 2016) to estimate applied water for agricultural 
                     crops in Solano County for 2010 and 2015 (as mapped by the U.S Department of Agriculture’s 
                     CropScape program). The inputs to the CUP+ model are climate, crop, and soil data, and the 
@@ -152,9 +154,15 @@ demandUI <- function(id) {
                     temperature, humidity, wind, and precipitation. Results are given as evotranspiration of 
                     applied water (ETaw), which is an estimate of the net applied water required to produce a given 
                     crop under the defined soil and climatic conditions.'),
-             tags$p('We integrated the CUP+ applied water results in a Geographic Information System (GIS) to 
+                      tags$p('We integrated the CUP+ applied water results in a Geographic Information System (GIS) to 
                     facilitate comparisons between agricultural water demand and water deliveries (surface and groundwater) 
-                    within water resources management entity service areas in the County.')),
+                    within water resources management entity service areas in the County.'))), 
+             fluidRow(
+               column(width = 12, 
+                      tabsetPanel(
+                        tabPanel(title="2010", plotlyOutput(ns("demand_bars_2010"))), 
+                        tabPanel(title="2015", plotlyOutput(ns("demand_bars_2015")))
+                      )))),
       column(width = 6,
              withSpinner(leafletOutput(ns('roi_map'), height=750), type = 8, color = '#666666'))
     )
@@ -202,6 +210,28 @@ demand <- function(input, output, session) {
                                  '<br><b style = padding-left:10px;>2015</b>', pretty_num(`2015 (Acre-ft)`, 0),'<em>AF/acre</em>')) %>% 
       addPolygons(data = county, group = 'Solano County', color = '#666666', fill = FALSE) %>% 
       addLayersControl(baseGroups = c('Map', 'Satelite'), overlayGroups = c("Regions", 'Solano County', 'Solano Sub Basin', 'Delivery Entities'))
+  })
+  
+  output$demand_bars_2010 <- renderPlotly({
+    # demand plots 
+    applied_demand %>% 
+      filter(year== "2010") %>% 
+      plot_ly(x=~fct_inorder(display_name), y=~demand_acre_ft, type='bar', color=~Boundary, colors="Accent") %>% 
+      layout(margin = list(b=80), 
+             xaxis = list(title=""), 
+             yaxis = list(title="volume (ac-ft)"),
+             showlegend=FALSE)
+  })
+  
+  output$demand_bars_2015 <- renderPlotly({
+    # demand plots 
+    applied_demand %>% 
+      filter(year== "2015") %>% 
+      plot_ly(x=~fct_inorder(display_name), y=~demand_acre_ft, type='bar', color=~Boundary, colors="Accent") %>% 
+      layout(margin = list(b=80), 
+             xaxis = list(title=""), 
+             yaxis = list(title="volume (ac-ft)"),
+             showlegend=FALSE)
   })
   
 }

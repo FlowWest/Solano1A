@@ -9,8 +9,8 @@ library(rgdal)
 library(raster)
 library(sp)
 library(readxl)
-library(dygraphs)
 library(broom)
+library(forcats)
 
 source('module/home.R')
 source('module/delivery.R')
@@ -19,13 +19,14 @@ source('module/ground_water.R')
 source('module/water_balance.R')
 
 
-applied_demand <- read_rds("data/delivery/applied_water_demand.rds")
+applied_demand <- read_rds("data/delivery/applied_water_demand2.rds")
+applied_demand$display_name <- factor(applied_demand$display_name)
 solano_deliveries <- read_rds("data/delivery/solano_county_deliveries.rds")
 percent_delivered <- read_csv("raw-data/percent_deliveries_updated.csv")
 casgem_metadata <- read_rds('data/casgem/gwlLatLong.rds')
 casgem <- read_rds('data/casgem/gwl_in_solano.rds')
 balance_data <- read_rds("data/water_balance/water_balance_summary_bar_chart.rds")
-
+?Forec
 sub_basin <- rgdal::readOGR('data/solano_subbasin/solano_subasin2016.shp', stringsAsFactors = FALSE) %>% 
   spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
 

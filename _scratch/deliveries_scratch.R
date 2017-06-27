@@ -166,7 +166,16 @@ solano_deliveries$boundary_type[city_boundaries] <- "City"
 solano_deliveries$boundary_type[!city_boundaries] <- "Water District"
 
 
-solano_deliveries
+# demand plots 
+applied_demand %>% 
+  filter(year== "2010") %>% 
+  plot_ly(x=~display_name, y=~demand_acre_ft, type='bar', color=~Boundary, colors="Accent") %>% 
+  layout(margin = list(b=80), 
+         xaxis = list(title=""), 
+         showlegend=FALSE)
+
+applied_demand$display_name <- applied_demand$Boundary %>% 
+  map_chr(function(x) {paste(strwrap(x, width = 16), collapse = "<br>")})
 
 
 
