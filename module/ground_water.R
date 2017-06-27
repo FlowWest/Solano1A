@@ -1,3 +1,9 @@
+to_xts_object <- function(.d) {
+  x <- xts::xts(.d$wse, order.by = .d$MEASUREMENT_DATE)
+  colnames(x) <- "water surface elevation"
+  x
+}
+
 casgem_dataUI <- function(id) {
   ns <- NS(id) 
   
@@ -5,6 +11,7 @@ casgem_dataUI <- function(id) {
     fluidRow(
       column(width = 12, leafletOutput(ns("casgem_map")))
     ), 
+    tags$br(),
     fluidRow(
       column(width = 12, plotlyOutput(ns("casgem_plot")))
     )
@@ -24,7 +31,8 @@ casgem_data <- function(input, output, session) {
   
   casgem_ts <- reactive({
     casgem %>% 
-      filter(SITE_CODE == casgem_map_events$clicked_marker)
+      filter(SITE_CODE == casgem_map_events$clicked_marker, 
+             !is.na(wse), wse >= 0)
   })
   
   output$casgem_map <- renderLeaflet({
@@ -37,25 +45,36 @@ casgem_data <- function(input, output, session) {
                        layerId = ~SITE_CODE)
   })
   
-  output$casgem_plot <- renderPlotly({
+  output$casgem_plot <- renderDygraph({
     # start up message
     validate(
       need(!is.null(casgem_map_events$clicked_marker), "Select well location above")
     )
     
     # no data message
-    validate(need(nrow(casgem_ts() > 0), "No data found at selected location"))
+    validate(need(nrow(casgem_ts()) > 0, "No data found at selected location"))
     
     validate(need(sum(!is.na(casgem_ts()$wse)) > 0, "No data found at selected location"))
-    
-    casgem_ts() %>% 
-      plot_ly(x=~MEASUREMENT_DATE, y=~wse, type='scatter', mode='lines') %>% 
-      add_markers(y=~wse, marker=list(size=5, color="#666666")) %>% 
-      layout(xaxis=list(title=""), 
-             yaxis=list(title="Water Surface Elevation (ft)"))
-  })
+ 
+    casgem_ts() %>%
+      plot_ly(x=~MEASUREMENT_DATE, y=~wse, type='scatter', mode='lines',
+              connectgaps = TRUE, fill="tozeroy", 
+              fillcolor = 'rgba(31,120,180, 0.2)') %>%
+      add_markers(y=~wse, marker=list(size=2, color="#666666"), name=NULL) %>%
+      layout(xaxis=list(title=""),
+             yaxis=list(title="Water Surface Elevation (ft)"),
+             showlegend = FALSE)
   
-}
+  #   casgem_ts() %>% dplyr::select(MEASUREMENT_DATE, wse) %>% 
+  #     to_xts_object() %>% 
+  #     dygraph() %>% 
+  #     dySeries('water surface elevation') %>% 
+  #     dyRangeSelector() %>% 
+  #     dyLegend(width = 500) %>% 
+  #     dyOptions(fillGraph = TRUE, drawGrid = FALSE)
+  # })
+  
+})}
 
 elevation_changeUI <- function(id) {
   ns <- NS(id)
