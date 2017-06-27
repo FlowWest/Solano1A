@@ -46,6 +46,7 @@ water_balance <- function(input, output, session) {
       plot_ly(x=~fct_inorder(display_label), y=~volume, color=~entity_type, type='bar', colors="Accent") %>% 
       layout(title="2010 Water Balance", 
              xaxis = list(title =""), 
+             yaxis = list(title = "Volume  (acre-feet)"),
              margin = list(b=80))
   })
   
@@ -55,6 +56,7 @@ water_balance <- function(input, output, session) {
       plot_ly(x=~fct_inorder(display_label), y=~volume, color=~entity_type, type='bar', colors="Accent") %>% 
       layout(title="2015 Water Balance", 
              xaxis = list(title =""), 
+             yaxis = list(title = "Volume  (acre-feet)"),
              margin = list(b=80))
   })
 }

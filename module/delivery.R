@@ -142,7 +142,7 @@ delivery <- function(input, output, session) {
         plot_ly(x=~entity_labels, y=~value, color=~reporting_type, 
                 type='bar', colors = "Dark2", source = 'source', key = ~shape_ref_attr) %>% 
         layout(xaxis = list(title="", tickangle = -45, ticklen = 1, tickfont = 5),
-               yaxis = list(title="Delivered (ac-ft)"),
+               yaxis = list(title="Volume (acre-feet)"),
                margin = list(pad = 0, b = 90), 
                dragmode = "zoom")
     } else {
@@ -153,7 +153,7 @@ delivery <- function(input, output, session) {
         layout(title=paste(deliveries()$`Water Resources Management Entity`[1]), 
                xaxis = list(title="", tickangle = -45, ticklen = 1, 
                             tickfont = 5, showticklabels = FALSE),
-               yaxis = list(title="Delivered (ac-ft)"),
+               yaxis = list(title="Volume (acre-feet)"),
                margin = list(pad = 0, b = 90), 
                dragmode = "zoom")
     }
