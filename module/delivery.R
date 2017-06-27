@@ -132,14 +132,32 @@ delivery <- function(input, output, session) {
   })
   
   output$deliver_plot <- renderPlotly({
-    deliveries() %>% 
-      mutate(entity_labels = abbreviate(`Water Resources Management Entity`, minlength = 15)) %>% 
-      plot_ly(x=~entity_labels, y=~value, color=~reporting_type, 
-              type='bar', colors = "Dark2", source = 'source', key = ~shape_ref_attr) %>% 
-      layout(xaxis = list(title="", tickangle = -45, ticklen = 1, tickfont = 5),
-             yaxis = list(title="Delivered (ac-ft)"),
-             margin = list(pad = 0, b = 90), 
-             dragmode = "zoom")
+    
+    # TODO: logic for where to show entity label, needs more work
+    # currently it just checks to see if a click is not null indicating 
+    # that user selected an entity
+    if (is.null(map_events$clicked_shape)) {
+      deliveries() %>% 
+        mutate(entity_labels = abbreviate(`Water Resources Management Entity`, minlength = 15)) %>% 
+        plot_ly(x=~entity_labels, y=~value, color=~reporting_type, 
+                type='bar', colors = "Dark2", source = 'source', key = ~shape_ref_attr) %>% 
+        layout(xaxis = list(title="", tickangle = -45, ticklen = 1, tickfont = 5),
+               yaxis = list(title="Delivered (ac-ft)"),
+               margin = list(pad = 0, b = 90), 
+               dragmode = "zoom")
+    } else {
+      deliveries() %>% 
+        mutate(entity_labels = abbreviate(`Water Resources Management Entity`, minlength = 15)) %>% 
+        plot_ly(x=~entity_labels, y=~value, color=~reporting_type, 
+                type='bar', colors = "Dark2", source = 'source', key = ~shape_ref_attr) %>% 
+        layout(title=paste(deliveries()$`Water Resources Management Entity`[1]), 
+               xaxis = list(title="", tickangle = -45, ticklen = 1, 
+                            tickfont = 5, showticklabels = FALSE),
+               yaxis = list(title="Delivered (ac-ft)"),
+               margin = list(pad = 0, b = 90), 
+               dragmode = "zoom")
+    }
+    
   })
   
   output$delivery_summary <- DT::renderDataTable({
