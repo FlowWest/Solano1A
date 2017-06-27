@@ -161,9 +161,22 @@ demandUI <- function(id) {
   )
 }
 
+# 
+# County
+# 
+# Solano Sub-basin within the County
+# SID
+# MPWD
+# RD 2068
+# 
+# 
+# 2010 and 2015 Demand volumes are here:
+#   U:\Active Projects\Solano_County_Water_Resources\Dash\solano-flat-files_revised\AppliedWaterDemand_updated.csv
+
 demand <- function(input, output, session) {
   
   pal2015 <- colorFactor(palette = 'Dark2', domain = ROIs$AWD2015_AF)
+  palent <- colorFactor(palette = 'Dark2', domain = sub_deliv_ent$Acronym)
   
   output$roi_map <- renderLeaflet({
     leaflet() %>% 
@@ -176,10 +189,19 @@ demand <- function(input, output, session) {
                                  '<b style = padding-left:10px;>2010</b>', pretty_num(AWD2010_AF, 0), '<em>AF/acre</em>',
                                  '<br><b style = padding-left:10px;>2015</b>', pretty_num(AWD2015_AF, 0),'<em>AF/acre</em>'),
                   group = 'Regions') %>% 
-      addPolygons(data = sub_basin, group ='Solano Sub Basin') %>% 
+      addPolygons(data = sub_basin, group ='Solano Sub Basin', label = ~Boundary,
+                  popup = ~paste('<b>Total Acres</b> <br>', pretty_num(Acres, 0), '<br><br>',
+                                 '<b> Applied Water Demand </b><br>',
+                                 '<b style = padding-left:10px;>2010</b>', pretty_num(`2010 (Acre-ft)`, 0), '<em>AF/acre</em>',
+                                 '<br><b style = padding-left:10px;>2015</b>', pretty_num(`2015 (Acre-ft)`, 0),'<em>AF/acre</em>')) %>% 
+      addPolygons(data = sub_deliv_ent, group = 'Delivery Entities', color = ~palent(Acronym),
+                  label = ~Acronym,
+                  popup = ~paste('<b>Total Acres</b> <br>', pretty_num(Acres, 0), '<br><br>',
+                                 '<b> Applied Water Demand </b><br>',
+                                 '<b style = padding-left:10px;>2010</b>', pretty_num(`2010 (Acre-ft)`, 0), '<em>AF/acre</em>',
+                                 '<br><b style = padding-left:10px;>2015</b>', pretty_num(`2015 (Acre-ft)`, 0),'<em>AF/acre</em>')) %>% 
       addPolygons(data = county, group = 'Solano County', color = '#666666', fill = FALSE) %>% 
-      addLayersControl(baseGroups = c('Map', 'Satelite'), overlayGroups = c("Regions", 'Solano County', 'Solano Sub Basin')) %>% 
-      hideGroup('Solano Sub Basin')
+      addLayersControl(baseGroups = c('Map', 'Satelite'), overlayGroups = c("Regions", 'Solano County', 'Solano Sub Basin', 'Delivery Entities'))
   })
   
 }

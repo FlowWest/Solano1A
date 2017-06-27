@@ -3,6 +3,7 @@ shinyServer(function(input, output) {
   callModule(delivery, 'one')
   callModule(demand, 'one')
   callModule(elevation_change, 'one')
+  callModule(casgem_data, 'one')
   callModule(model_aw, 'one')
   callModule(crops, 'one')
 })
