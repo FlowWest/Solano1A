@@ -43,7 +43,7 @@ water_balance <- function(input, output, session) {
   output$water_balance_plot_2010 <- renderPlotly({
     balance_data %>% 
       filter(year == "2010") %>% 
-      plot_ly(x=~display_label, y=~volume, color=~entity_type, type='bar', colors="Accent") %>% 
+      plot_ly(x=~fct_inorder(display_label), y=~volume, color=~entity_type, type='bar', colors="Accent") %>% 
       layout(title="2010 Water Balance", 
              xaxis = list(title =""), 
              margin = list(b=80))
@@ -52,7 +52,7 @@ water_balance <- function(input, output, session) {
   output$water_balance_plot_2015 <- renderPlotly({
     balance_data %>% 
       filter(year == "2015") %>% 
-      plot_ly(x=~display_label, y=~volume, color=~entity_type, type='bar', colors="Accent") %>% 
+      plot_ly(x=~fct_inorder(display_label), y=~volume, color=~entity_type, type='bar', colors="Accent") %>% 
       layout(title="2015 Water Balance", 
              xaxis = list(title =""), 
              margin = list(b=80))

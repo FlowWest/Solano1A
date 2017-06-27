@@ -26,7 +26,7 @@ percent_delivered <- read_csv("raw-data/percent_deliveries_updated.csv")
 casgem_metadata <- read_rds('data/casgem/gwlLatLong.rds')
 casgem <- read_rds('data/casgem/gwl_in_solano.rds')
 balance_data <- read_rds("data/water_balance/water_balance_summary_bar_chart.rds")
-?Forec
+balance_data$display_label <- factor(balance_data$display_label)
 sub_basin <- rgdal::readOGR('data/solano_subbasin/solano_subasin2016.shp', stringsAsFactors = FALSE) %>% 
   spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
 
