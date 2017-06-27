@@ -38,7 +38,9 @@ deliveryUI <- function(id) {
                     delivered water is from surface sources. The City of Dixon 
                     (including Cal Water Service area) is the largest groundwater delivery 
                     entity in the County; SID, Vacaville, RNVWD, Travis AFB, and Rio Vista 
-                    also deliver groundwater. The City of Davis is outside of Solano County, 
+                    also deliver groundwater."), 
+             tags$br(),
+             tags$p("The City of Davis is outside of Solano County, 
                     but was included in this summary (but not in County water balance totals 
                     in the following sections) as it is immediately adjacent to the County and 
                     has historically delivered a significant volume of groundwater. 
@@ -124,7 +126,7 @@ delivery <- function(input, output, session) {
                   fill = TRUE, 
                   layerId=~Name, weight = 2, 
                   label = ~Name, fillOpacity = .6) %>% 
-      addLayersControl(baseGroups = c('Map', 'Satelite'))
+      addLayersControl(baseGroups = c('Map', 'Satellite'))
   })
   
   output$deliver_plot <- renderPlotly({

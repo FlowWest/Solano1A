@@ -129,7 +129,36 @@ entity_summary <- function(.d) {
 
 
 
+View(water_balance)
 
+colnames(water_balance) <- c("Entity", "2010", "2015", "Percent Change")
+
+water_balance <- water_balance %>% 
+  gather(year, volume, `2010`:`2015`) %>% 
+  mutate("Percent Change" = parse_number(`Percent Change`))
+
+water_balance %>%
+  filter(year == "2010") %>% 
+  plot_ly(x=~Entity, y=~volume, type='bar', color=~year)
+
+water_balance %>%
+  filter(year == "2015") %>% 
+  plot_ly(x=~Entity, y=~volume, type='bar', color=~year)
+
+View(balance_data)
+
+urban_water <- stringr::str_detect(balance_data$Entity, "Urban Water")  
+ag_water <- stringr::str_detect(balance_data$Entity, "Agricultural Water")  
+all_water <- !urban_water & !ag_water 
+  
+balance_data$entity_type[urban_water] <- "Urban Water"
+balance_data$entity_type[ag_water] <- "Agricultural Water"
+balance_data$entity_type[all_water] <- "Countywide Water"
+
+  
+balance_data$display_label <- balance_data$Entity %>% 
+  map_chr(function(x) {paste(strwrap(x, width = 16), collapse = "<br>")})
+  
 
 
 

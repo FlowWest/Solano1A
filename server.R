@@ -6,4 +6,5 @@ shinyServer(function(input, output) {
   callModule(casgem_data, 'one')
   callModule(model_aw, 'one')
   callModule(crops, 'one')
+  callModule(water_balance, 'one')
 })
