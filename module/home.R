@@ -30,7 +30,7 @@ homeUI <- function(id) {
                tags$li(tags$b("Groundwater"), ' - Shows how well records indicate greater decreases in groundwater 
                        elevations along the northern extent of the County.')),
              tags$br(),
-             tags$a(tags$img(src = 'TransLogoTreb.png', width = '200px', style = 'display:inline-block;'),
+             tags$a(tags$img(src = 'TransLogoTreb.png', width = '150px', style = 'display:inline-block;'),
                     href = 'http://www.flowwest.com/', target = '_blank'),
              tags$h6('App created and maintained by:', tags$a(href = 'mailto:erodriguez@flowwest.com', 'Emanuel Rodriguez', target = '_blank'),
                      'and', tags$a(href = 'mailto:sgill@flowwest.com', 'Sadie Gill', target = '_blank'), 

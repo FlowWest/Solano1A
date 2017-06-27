@@ -219,8 +219,10 @@ demand <- function(input, output, session) {
       plot_ly(x=~fct_inorder(display_name), y=~demand_acre_ft, type='bar', color=~Boundary, colors="Accent") %>% 
       layout(margin = list(b=80), 
              xaxis = list(title=""), 
-             yaxis = list(title="Volume (acre-feet)"),
-             showlegend=FALSE)
+             yaxis = list(title="Volume (acre-feet)",
+                          range = c(0, 300000)),
+             showlegend=FALSE) %>% 
+      config(displayModeBar = FALSE)
   })
   
   output$demand_bars_2015 <- renderPlotly({
@@ -230,8 +232,10 @@ demand <- function(input, output, session) {
       plot_ly(x=~fct_inorder(display_name), y=~demand_acre_ft, type='bar', color=~Boundary, colors="Accent") %>% 
       layout(margin = list(b=80), 
              xaxis = list(title=""), 
-             yaxis = list(title="Volume (acre-feet)"),
-             showlegend=FALSE)
+             yaxis = list(title="Volume (acre-feet)",
+                          range = c(0, 300000)),
+             showlegend=FALSE) %>% 
+      config(displayModeBar = FALSE)
   })
   
 }
