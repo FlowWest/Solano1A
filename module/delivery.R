@@ -126,9 +126,9 @@ delivery <- function(input, output, session) {
                   fill = TRUE, 
                   layerId=~Name, weight = 2, 
                   label = ~Name, fillOpacity = .6, 
-                  group =~entity_type) %>% 
+                  group =~entty_t) %>% 
       addLayersControl(baseGroups = c('Map', 'Satellite'), 
-                      overlayGroups = paste(deliv_entities$entity_type))
+                      overlayGroups = paste(deliv_entities$entty_t))
   })
   
   output$deliver_plot <- renderPlotly({
