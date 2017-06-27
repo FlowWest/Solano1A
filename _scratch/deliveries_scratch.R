@@ -159,7 +159,11 @@ balance_data$entity_type[all_water] <- "Countywide Water"
 balance_data$display_label <- balance_data$Entity %>% 
   map_chr(function(x) {paste(strwrap(x, width = 16), collapse = "<br>")})
   
+city_boundaries <- stringr::str_detect(solano_deliveries$`Water Resources Management Entity`, 
+                                       "City")
 
+solano_deliveries$boundary_type[city_boundaries] <- "City"
+solano_deliveries$boundary_type[!city_boundaries] <- "Water District"
 
 
 

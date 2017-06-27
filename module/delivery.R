@@ -125,8 +125,10 @@ delivery <- function(input, output, session) {
                   color = ~deliv_pal(Name), 
                   fill = TRUE, 
                   layerId=~Name, weight = 2, 
-                  label = ~Name, fillOpacity = .6) %>% 
-      addLayersControl(baseGroups = c('Map', 'Satellite'))
+                  label = ~Name, fillOpacity = .6, 
+                  group =~entity_type) %>% 
+      addLayersControl(baseGroups = c('Map', 'Satellite'), 
+                      overlayGroups = paste(deliv_entities$entity_type))
   })
   
   output$deliver_plot <- renderPlotly({
