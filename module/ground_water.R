@@ -8,6 +8,9 @@ casgem_dataUI <- function(id) {
   ns <- NS(id) 
   
   tagList(
+    tags$h4("Groundwater Data", style="display: inline;"),
+    tags$em(tags$p("available well data from Solano DWR Water Data Library and 
+           CASGEM database", style="display: inline;")),
     fluidRow(
       column(width = 12, leafletOutput(ns("casgem_map")))
     ), 

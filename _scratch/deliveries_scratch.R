@@ -166,6 +166,9 @@ solano_deliveries$boundary_type[city_boundaries] <- "City"
 solano_deliveries$boundary_type[!city_boundaries] <- "Water District"
 
 
+solano_deliveries
+
+
 
 
 
