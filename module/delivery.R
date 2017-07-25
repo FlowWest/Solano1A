@@ -118,6 +118,7 @@ delivery <- function(input, output, session) {
   # need to figure out spatial component to delivery data
   output$delivery_map <- renderLeaflet({
     leaflet() %>% 
+      addProviderTiles(providers$Esri.WorldTopoMap, group = 'Topo') %>%
       addProviderTiles(providers$CartoDB.Positron, group = 'Map') %>% 
       addProviderTiles(providers$Esri.WorldImagery, group = 'Satelite') %>% 
       # basic polygon added needs work!
@@ -127,7 +128,7 @@ delivery <- function(input, output, session) {
                   layerId=~Name, weight = 2, 
                   label = ~Name, fillOpacity = .6, 
                   group =~entty_t) %>% 
-      addLayersControl(baseGroups = c('Map', 'Satellite'), 
+      addLayersControl(baseGroups = c('Map', 'Satellite', 'Topo'), 
                       overlayGroups = paste(deliv_entities$entty_t))
   })
   
@@ -166,8 +167,10 @@ delivery <- function(input, output, session) {
     )
     summ <- summary_data() %>% dplyr::select(-c(`Water Resources Management Entity`, 
                                                shape_ref_attr))
-    summ$percent_of_total <- pretty_num(summ$percent_of_total * 100)
+    summ$percent_of_total <- floor(summ$percent_of_total * 100)
     colnames(summ) <- c("Year", "Delivery Type", "Delivered Amount", "Year Total", "Percent of Total")
+    summ$`Year Total` <- pretty_num(summ$`Year Total`)
+    summ$`Delivered Amount` <- pretty_num(summ$`Delivered Amount`)
     return(DT::datatable(summ, options = list(dom = 't', 
                                               columnDefs = list(list(className = 'dt-center', targets = 4)))))
   })

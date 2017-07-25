@@ -51,13 +51,14 @@ home <- function(input, output, session) {
   
   output$ROI <- renderLeaflet({
     leaflet() %>% 
+      addProviderTiles(providers$Esri.WorldTopoMap, group = 'Topo') %>% 
       addProviderTiles(providers$CartoDB.Positron, group = 'Map') %>% 
       addProviderTiles(providers$Esri.WorldImagery, group = 'Satelite') %>% 
       addPolygons(data = county, group = 'Solano County', color = '#666666', fill = FALSE) %>% 
       addPolygons(data = groundwater_basins, label = ~Basin_Name, color = ~pal2(Basin_Name), group = 'Groundwater Basins') %>% 
       addPolygons(data = deliv_entities, color = ~pal(Name), weight = 2, 
                   label = ~Name, group = 'Delivery Entity') %>% 
-      addLayersControl(baseGroups = c('Map', 'Satelite'), overlayGroups = c('Delivery Entity', 'Solano County', 'Groundwater Basins'))
+      addLayersControl(baseGroups = c('Map', 'Satelite', 'Topo'), overlayGroups = c('Delivery Entity', 'Solano County', 'Groundwater Basins'))
   })  
 }
 

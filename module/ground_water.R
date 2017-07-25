@@ -1,8 +1,3 @@
-to_xts_object <- function(.d) {
-  x <- xts::xts(.d$wse, order.by = .d$MEASUREMENT_DATE)
-  colnames(x) <- "water surface elevation"
-  x
-}
 
 casgem_dataUI <- function(id) {
   ns <- NS(id) 
@@ -41,7 +36,7 @@ casgem_data <- function(input, output, session) {
   
   output$casgem_map <- renderLeaflet({
     leaflet() %>% 
-      addProviderTiles(providers$CartoDB.Positron) %>% 
+      addProviderTiles(providers$Esri.WorldTopoMap) %>% 
       addCircleMarkers(data=casgem_metadata, 
                        clusterOptions = markerClusterOptions(), 
                        color = "#666666", weight = 1, 
@@ -87,13 +82,34 @@ elevation_changeUI <- function(id) {
   tagList(
     fluidRow(
       column(width = 6,
-             tags$h4('Groundwater Elevation Change (ft)')),
+             tags$h4('Groundwater Elevation Change (ft)'), 
+             tags$br(), 
+             tags$p("Using the DWR CASGEM groundwater elevation data, we 
+                    interpolated water surface elevation (WSE) records by well into surfaces of 
+                    groundwater change between 2015 and 2010 for the Spring and Fall seasons. We 
+                    compared these contours to the DWR GICIMA on-line tool 
+                    (https://gis.water.ca.gov/app/gicima/) in areas where they overlapped and 
+                    found reasonable agreement between results. Next, we evaluated the significance of 
+                    groundwater level change in different regions of the County using regression analysis. 
+                    Together these analysis products provide both a high-level and more detailed 
+                    understanding of recent groundwater changes."),
+             tags$br(),
+             tags$p("Groundwater conditions vary widely across the County and 
+                    through time. The surfaces of WSE change show groundwater 
+                    levels decreased between 2010 and 2015 in the northern portion 
+                    of the County, with spring season groundwater level reductions 
+                    being slightly greater than fall season reductions. Actual 
+                    change in groundwater elevation per well are shown at the points 
+                    on the map. Comparing the points with the surfaces illustrates 
+                    how  the interpolation of groundwater change surfaces smooths 
+                    out the measured changes at individual wells."
+             )),
       column(width = 6,
              tabsetPanel(
-                         tabPanel('Fall',
-                                  withSpinner(leafletOutput(ns('elev_mapF'), height=750), type = 8, color = '#666666')),
-                         tabPanel('Spring',
-                                  withSpinner(leafletOutput(ns('elev_mapS'), height=750), type = 8, color = '#666666'))
+               tabPanel('Fall',
+                        withSpinner(leafletOutput(ns('elev_mapF'), height=750), type = 8, color = '#666666')),
+               tabPanel('Spring',
+                        withSpinner(leafletOutput(ns('elev_mapS'), height=750), type = 8, color = '#666666'))
              ))
     )
   )
