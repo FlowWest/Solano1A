@@ -115,6 +115,8 @@ delivery <- function(input, output, session) {
     return(deliv_entities[deliv_entities$Name == entity, ])
   })
   
+
+  
   # need to figure out spatial component to delivery data
   output$delivery_map <- renderLeaflet({
     leaflet() %>% 

@@ -9,7 +9,6 @@ library(rgdal)
 library(raster)
 library(sp)
 library(readxl)
-library(broom)
 library(forcats)
 
 source('module/home.R')
@@ -25,8 +24,9 @@ solano_deliveries <- read_rds("data/delivery/solano_county_deliveries.rds")
 percent_delivered <- read_csv("raw-data/percent_deliveries_updated.csv")
 casgem_metadata <- read_rds('data/casgem/gwlLatLong.rds')
 casgem <- read_rds('data/casgem/gwl_in_solano.rds')
-balance_data <- read_rds("data/water_balance/water_balance_summary_bar_chart.rds")
+balance_data <- read_rds("data/water_balance/water_balance_fixed.rds")
 balance_data$display_label <- factor(balance_data$display_label)
+
 sub_basin <- rgdal::readOGR('data/solano_subbasin/solano_subasin2016.shp', stringsAsFactors = FALSE) %>% 
   spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
 

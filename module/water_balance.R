@@ -3,7 +3,7 @@ water_balanceUI <- function(id) {
   
   tagList(
     fluidRow(
-      column(width = 6, 
+      column(width = 4, 
              tags$h3("Water Balance Summary"), 
              tags$br(),
              tags$p("These charts summarize the estimated annual water balance for 
@@ -24,43 +24,50 @@ water_balanceUI <- function(id) {
                     balance changed between 2010 and 2015. While urban water demand 
                     decreased by 11% between 2010 and 2015, countywide and agricultural 
                     demand increased, as did the proportion of groundwater supply for 
-                    both urban and agricultural demands.  ")), 
-      column(width = 6, 
-             tabsetPanel(
-               tabPanel(title="2010", 
-                        fluidRow(plotlyOutput(ns("water_balance_plot_2010"), 
-                                              height = 600))), 
-               tabPanel(title="2015", 
-                        fluidRow(plotlyOutput(ns("water_balance_plot_2015"), 
-                                              height = 600)))
-             ))
+                    both urban and agricultural demands.  "), 
+             DT::dataTableOutput(ns("percent_change_table"))), 
+      column(width = 8,
+             plotlyOutput(ns("water_balance_plot_2010"), 
+                          height = 600)
+             )
     )
   )
 }
 
 water_balance <- function(input, output, session) {
   
+  percent_change_summary <- reactive({
+    balance_data %>% distinct(Entity, `Percent Change`) %>% 
+      dplyr::select(Entity, "Percent Change from 2010 to 2015" = `Percent Change`)
+  })
+  
+  output$percent_change_table <- DT::renderDataTable({
+    percent_change_summary()
+  }, options = list(dom = 't', columnDefs = list(list(className = 'dt-center')), 
+                    rownames = FALSE))
+  
   output$water_balance_plot_2010 <- renderPlotly({
     balance_data %>% 
-      filter(year == "2010") %>% 
-      plot_ly(x=~fct_inorder(display_label), y=~volume, color=~entity_type, type='bar', colors="Accent") %>% 
-      layout(title="2010 Water Balance", 
+      plot_ly(x=~fct_inorder(display_label), y=~volume, 
+              color=~as.character(year), type='bar', colors="Accent", 
+              text=~paste("<b>Volume (acre-feet)</b>:", round(volume)), 
+              hoverinfo = "text") %>% 
+      layout(title="2010 and 2015 Water Balance", 
              xaxis = list(title =""), 
-             yaxis = list(title = "Volume  (acre-feet)",
-                          range = c(0, 400000)),
+             yaxis = list(title = "Volume (acre-feet)"),
              margin = list(b=80)) %>% 
       config(displayModeBar = FALSE)
   })
   
-  output$water_balance_plot_2015 <- renderPlotly({
-    balance_data %>% 
-      filter(year == "2015") %>% 
-      plot_ly(x=~fct_inorder(display_label), y=~volume, color=~entity_type, type='bar', colors="Accent") %>% 
-      layout(title="2015 Water Balance", 
-             xaxis = list(title =""), 
-             yaxis = list(title = "Volume  (acre-feet)",
-                          range = c(0, 400000)),
-             margin = list(b=80)) %>% 
-      config(displayModeBar = FALSE)
-  })
+  # output$water_balance_plot_2015 <- renderPlotly({
+  #   balance_data %>% 
+  #     filter(year == "2015") %>% 
+  #     plot_ly(x=~fct_inorder(display_label), y=~volume, color=~entity_type, type='bar', colors="Accent") %>% 
+  #     layout(title="2015 Water Balance", 
+  #            xaxis = list(title =""), 
+  #            yaxis = list(title = "Volume  (acre-feet)",
+  #                         range = c(0, 400000)),
+  #            margin = list(b=80)) %>% 
+  #     config(displayModeBar = FALSE)
+  # })
 }
