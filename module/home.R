@@ -54,8 +54,9 @@ home <- function(input, output, session) {
       addProviderTiles(providers$Esri.WorldTopoMap, group = 'Topo') %>% 
       addProviderTiles(providers$CartoDB.Positron, group = 'Map') %>% 
       addProviderTiles(providers$Esri.WorldImagery, group = 'Satelite') %>% 
-      addPolygons(data = county, group = 'Solano County', color = '#666666', fill = FALSE) %>% 
-      addPolygons(data = groundwater_basins, label = ~Basin_Name, color = ~pal2(Basin_Name), group = 'Groundwater Basins') %>% 
+      addPolygons(data = county, group = 'Solano County', color = '#666666', fill = FALSE, weight = 3) %>% 
+      addPolygons(data = groundwater_basins, label = ~Basin_Name, color = ~pal2(Basin_Name),  weight = 2,
+                  group = 'Groundwater Basins') %>% 
       addPolygons(data = deliv_entities, color = ~pal(Name), weight = 2, 
                   label = ~Name, group = 'Delivery Entity') %>% 
       addLayersControl(baseGroups = c('Map', 'Satelite', 'Topo'), overlayGroups = c('Delivery Entity', 'Solano County', 'Groundwater Basins'))
