@@ -3,9 +3,9 @@ title: Solano1A
 account: flowwest
 server: shinyapps.io
 appId: 191987
-bundleId: 915509
+bundleId: 916721
 url: https://flowwest.shinyapps.io/Solano1A/
-when: 1501004128.92633
+when: 1501090371.5881
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: _scratch/deliveries_scratch.R
