@@ -80,7 +80,9 @@ model_awUI <- function(id) {
              tags$p('We used the California Department of Water Resources Consumptive Use Program PLUS 
                     (CUP+ Version 6.81; Orang, M. et al., 2016) to estimate applied water for agricultural 
                     crops in Solano County for 2010 and 2015 (as mapped by the U.S Department of Agriculture’s 
-                    CropScape program). The inputs to the CUP+ model are climate, crop, and soil data, and the 
+                    CropScape program). The inputs to the CUP+ model are climate, crop, and', 
+                    tags$a(href = "https://websoilsurvey.sc.egov.usda.gov/App/HomePage.htm", target="_blank", 'soil data'), 
+                    'and the 
                     model calculates annual applied water per unique combination of crop and soil type for a given
                     year of climate data, which can vary depending on climatic factors such as solar radiation, 
                     temperature, humidity, wind, and precipitation. Results are given as evotranspiration of 

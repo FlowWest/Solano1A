@@ -10,6 +10,7 @@ library(raster)
 library(sp)
 library(readxl)
 library(forcats)
+library(lubridate)
 
 source('module/home.R')
 source('module/delivery.R')

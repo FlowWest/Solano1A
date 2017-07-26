@@ -3,11 +3,16 @@ casgem_dataUI <- function(id) {
   ns <- NS(id) 
   
   tagList(
-    tags$h4("Groundwater Data", style="display: inline;"),
-    tags$em(tags$p("Available well data from DWR Water Data Library and 
-           CASGEM database for Solano County", style="display: inline; font-size=14px;")),
     fluidRow(
-      column(width = 12, leafletOutput(ns("casgem_map")))
+      column(width = 2, 
+             tags$h4("Groundwater Data", style="display: inline;"),
+             tags$br(),
+             tags$em(tags$p("Available well data from DWR Water Data Library and 
+           CASGEM database for Solano County", style="display: inline; font-size=14px;")), 
+             tags$hr(), 
+             selectInput(ns('well_year_filter'), "Filter by a minmum year of data", 
+                         choices=(1950:2017))),
+      column(width = 10, leafletOutput(ns("casgem_map")))
     ), 
     tags$br(),
     fluidRow(
@@ -31,13 +36,25 @@ casgem_data <- function(input, output, session) {
   casgem_ts <- reactive({
     casgem %>% 
       filter(SITE_CODE == casgem_map_events$clicked_marker, 
-             !is.na(wse), wse >= 0)
+             !is.na(wse), wse >= 0, 
+             year(MEASUREMENT_DATE) >= input$well_year_filter)
+  })
+  
+  available_casgem_well_data <- reactive({
+    casgem %>% 
+      filter(year(MEASUREMENT_DATE) >= input$well_year_filter)
+  })
+  
+  casgem_metdata_filtered <- reactive({
+    available_stations <- distinct(available_casgem_well_data(), SITE_CODE) %>% pull()
+    casgem_metadata %>% 
+      filter(SITE_CODE %in% available_stations)
   })
   
   output$casgem_map <- renderLeaflet({
     leaflet() %>% 
       addProviderTiles(providers$Esri.WorldTopoMap) %>% 
-      addCircleMarkers(data=casgem_metadata, 
+      addCircleMarkers(data=casgem_metdata_filtered(), 
                        clusterOptions = markerClusterOptions(), 
                        color = "#666666", weight = 1, 
                        fillColor = "#1f78b4", fillOpacity = .6, 
@@ -59,20 +76,18 @@ casgem_data <- function(input, output, session) {
       plot_ly(x=~MEASUREMENT_DATE, y=~wse, type='scatter', mode='lines',
               connectgaps = TRUE, 
               line = list(color="rgb(124, 124, 124, .2)", width=1), 
-              showlegend = FALSE
-              #, 
-              #fill="tozeroy", 
-              #fillcolor = 'rgba(31,120,180, 0.2)'
-              ) %>%
+              showlegend = FALSE) %>%
       add_markers(y=~wse, marker=list(color="#668ac4"), name="Water Surface Elevation", 
                   showlegend = TRUE) %>%
-      add_lines(y= ~fitted(loess(wse ~ as.numeric(MEASUREMENT_DATE))), 
-                line = list(color="#b2df8a", width=5), name = "Fitted Trend (loess)", 
-                showlegend = TRUE) %>%
+      # this brings up issues for when data set is too small
+      # add_lines(y= ~fitted(loess(wse ~ as.numeric(MEASUREMENT_DATE))),
+      #           line = list(color="#b2df8a", width=5), name = "Fitted Trend (loess)",
+      #           showlegend = TRUE) %>%
       layout(xaxis=list(title=""),
              yaxis=list(title="Water Surface Elevation (ft)"),
-             showlegend = TRUE)
+             showlegend = TRUE) 
 
+    
   
 })}
 
