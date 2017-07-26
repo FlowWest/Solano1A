@@ -6,21 +6,14 @@ cropsUI <- function(id) {
       column(width = 6,
              tags$h4('Crops'),
              tags$br(),
-             tags$p('We used the California Department of Water Resources Consumptive Use Program PLUS (CUP+ Version 6.81; 
-                    Orang, M. et al., 2016) to estimate applied water for agricultural crops in Solano County for 2010 and 
-                    2015 (as mapped by the U.S Department of Agriculture’s CropScape program). The inputs to the CUP+ model 
-                    are climate, crop, and soil data, and the model calculates annual applied water per unique combination
-                    of crop and soil type for a given year of climate data, which can vary depending on climatic factors such 
-                    as solar radiation, temperature, humidity, wind, and precipitation. Results are given as evotranspiration
-                    of applied water (ETaw), which is an estimate of the net applied water required to produce a given crop 
-                    under the defined soil and climatic conditions.'),
-             tags$p('This tab shows crop acreages and model results for the most significant crop types in terms of acreage
-                    in the County. It is important to note the potential changes within applied water demand for a single
-                    crop type. For example, the evapotranspirative applied water demand for almonds increased from 2.02 
-                    acre-feet/acre in 2010 to 2.49 acre-feet/acre in 2015. This highlights how changes in climate can impact 
-                    the required water for a given crop. Certain crops, however, did not demonstrate as much sensitivity to 
-                    climate. For example, grain crop evapotranspirative applied water demand changed very slightly from 2010 to
-                    2015 in spite of different climate conditions.')),
+             tags$p('We used the California Department of Water Resources Consumptive Use Program PLUS (CUP+ Version 6.81; Orang, M. et al., 2016) to estimate applied water for agricultural crops in Solano County for 2010 and 2015 (as mapped by the U.S Department of Agriculture’s CropScape program). The inputs to the CUP+ model are climate, crop, and soil data, and the model calculates annual applied water per unique combination of crop and soil type for a given year of climate data, which can vary depending on climatic factors such as solar radiation, temperature, humidity, wind, and precipitation. Results are given as evotranspiration of applied water (ETaw), which is an estimate of the net applied water required to produce a given crop under the defined soil and climatic conditions. '),
+             tags$p('This tab shows crop acreages and model results for the most significant crop types in terms of acreage in the County. It is important to note the potential changes within applied water demand for a single crop type. For example, the evapotranspirative applied water demand for almonds increased from 2.02 acre-feet/acre in 2010 to 2.49 acre-feet/acre in 2015. This highlights how changes in climate can impact the required water for a given crop. Certain crops, however, did not demonstrate as much sensitivity to climate. For example, grain crop evapotranspirative applied water demand changed very slightly from 2010 to 2015 in spite of different climate conditions.'),
+             tags$p('Other crops types for which agricultural applied water demand was calculated, but are not presented in the table due to smaller acreages are:', 
+                    tags$br(),'sod / grass seed, asparagus, oranges, olives, onion, truck crops, potatoes, dry beans, lettuce, and “other crops”—as categorized by the USDA.'),
+             tags$p('Crop types with a “+” include the following crops per type.', tags$br(),
+                    'Alfalfa+ category includes: Alfalfa, Rice', tags$br(),
+                    'VetchCorn+ category includes: Corn, Sorghum, Sweet Corn, Double Crop Oats/Corn', tags$br(),
+                    'Sunflower+ category includes: Sunflower, Cotton')),
       column(width = 6,
              tabsetPanel(
                tabPanel('Area',
@@ -36,6 +29,9 @@ crops <- function(input, output, session) {
   
   output$crop_areas <- renderPlotly({
     crop_acres %>% 
+      dplyr::filter(`2015 Summary Crop Type` %in% 
+                      c('Alfalfa+','Almonds','Corn+','Deciduous fruits and nuts','Grains','Safflower',
+                        'Sunflower+','Tomatoes','Wine grapes', 'Winter wheat')) %>% 
       plot_ly(y = ~`2015 Summary Crop Type`, x = ~`Total Area (acres) in Solano County for 2010`, type = 'bar', name = '2010',
               orientation = 'h', hoverinfo = 'text', marker = list(color = 'rgba(136,65,157, 1)'),
               text = ~paste('2010', `2015 Summary Crop Type`, '<br>', 
@@ -52,6 +48,9 @@ crops <- function(input, output, session) {
   
   output$crop_demands <- renderPlotly({
     crop_demand %>% 
+      dplyr::filter(`2015 Summary Crop Type` %in% 
+                      c('Alfalfa+','Almonds','Corn+','Deciduous fruits and nuts','Grains','Safflower',
+                        'Sunflower+','Tomatoes','Wine grapes', 'Winter wheat')) %>% 
       plot_ly(y = ~`2015 Summary Crop Type`, x = ~`2010 Total Agricultural Applied Water Demand (acre-feet / year)`, type = 'bar', name = '2010',
               orientation = 'h', hoverinfo = 'text', marker = list(color = 'rgba(136,65,157, 1)'),
               text = ~paste('2010', `2015 Summary Crop Type`, '<br>',
