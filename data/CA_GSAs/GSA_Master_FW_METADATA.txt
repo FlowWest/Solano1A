@@ -1,0 +1,11 @@
+Staff initials:  AC
+Title: GSA_Master (GSA = Groundwater Sustainability Agency)
+Data Type (point, line, polygon):  polygon
+Date acquired by FlowWest: 7/26/2017
+Source: DWR
+Link: http://sgma.water.ca.gov/webgis/index.jsp?appid=gasmaster&rz=true --> downloaded "GSA Notice Submitted" layer
+Contact Information: Mark Nordberg at Mark.Nordberg@water.ca.gov or 916-651-9673
+Geographic Coordinate System:	GCS_WGS_1984
+Angular Unit: 	Degree
+Tags:groundwater, sustainability, gsa, gsp
+Notes:

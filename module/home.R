@@ -58,12 +58,25 @@ home <- function(input, output, session) {
       addProviderTiles(providers$Esri.WorldTopoMap, group = 'Topo') %>% 
       addProviderTiles(providers$CartoDB.Positron, group = 'Map') %>% 
       addProviderTiles(providers$Esri.WorldImagery, group = 'Satelite') %>% 
+      setView(lng = -121.933136, lat = 38.301334, zoom = 10) %>%
       addPolygons(data = county, group = 'Solano County', color = '#666666', fill = FALSE, weight = 3) %>% 
       addPolygons(data = groundwater_basins, label = ~Basin_Name, color = ~pal2(Basin_Name),  weight = 2,
                   group = 'Groundwater Basins') %>% 
       addPolygons(data = deliv_entities, color = ~pal(Name), weight = 2, 
                   label = ~Name, group = 'Delivery Entity') %>% 
-      addLayersControl(baseGroups = c('Map', 'Satelite', 'Topo'), overlayGroups = c('Delivery Entity', 'Solano County', 'Groundwater Basins'))
+      addPolygons(data = gsa, fillOpacity = .1, weight = 5, label = ~ GSA.Name, color = '#e7298a',
+                  group = 'Groundwater Sustainability Agencies') %>% 
+      addPolygons(data = RD2068_2017, group = 'Updated RD 2068 (2017)', weight = 2, 
+                  color = '#1b9e77', label = 'Updated RD 2068 (2017)') %>% 
+      addPolygons(data = RD999, group = 'RD 999', label =  'RD 999', weight = 2, 
+                  color = '#d95f02') %>% 
+      addPolygons(data = ryer, group = 'Ryer Island (RD 501)', label = 'Ryer Island (RD 501)',
+                  weight = 2, color = '#7570b3') %>% 
+      addLayersControl(baseGroups = c('Map', 'Satelite', 'Topo'), 
+                       overlayGroups = c('Delivery Entity', 'Solano County', 'Groundwater Basins',  
+                                         'Updated RD 2068 (2017)', 'Ryer Island (RD 501)',
+                                         'RD 999','Groundwater Sustainability Agencies')) %>% 
+      hideGroup(c('Groundwater Sustainability Agencies', 'Groundwater Basins', 'Updated RD 2068 (2017)'))
   })  
 }
 

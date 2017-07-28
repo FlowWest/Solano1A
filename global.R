@@ -31,6 +31,18 @@ balance_data$display_label <- factor(balance_data$display_label)
 sub_basin <- rgdal::readOGR('data/solano_subbasin/solano_subasin2016.shp', stringsAsFactors = FALSE) %>%
   spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
 
+gsa <- rgdal::readOGR('data/CA_GSAs/GSA_Master.shp', stringsAsFactors = FALSE) %>%
+  spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
+
+RD2068_2017 <- rgdal::readOGR('data/RD2068/RD2068.shp', stringsAsFactors = FALSE) %>%
+  spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
+
+RD999 <- rgdal::readOGR('data/rd_999/rd999.shp', stringsAsFactors = FALSE) %>%
+  spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
+
+ryer <- rgdal::readOGR('data/ryer_island/ryerisland501.shp', stringsAsFactors = FALSE) %>%
+  spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
+
 county <- rgdal::readOGR('data/county_boundaries/countyboundarypoly.shp', stringsAsFactors = FALSE) %>%
   spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
 
