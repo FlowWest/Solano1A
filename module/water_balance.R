@@ -38,7 +38,8 @@ water_balance <- function(input, output, session) {
   
   percent_change_summary <- reactive({
     balance_data %>% distinct(Entity, `Percent Change`) %>% 
-      dplyr::select(Entity, "Percent Change from 2010 to 2015" = `Percent Change`)
+      dplyr::mutate("Percent Change from 2010 to 2015" = paste0(`Percent Change`, "%")) %>% 
+      dplyr::select(Entity, `Percent Change from 2010 to 2015`)
   })
   
   output$percent_change_table <- DT::renderDataTable({
