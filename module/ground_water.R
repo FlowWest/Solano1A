@@ -164,6 +164,7 @@ elevation_change <- function(input, output, session) {
       addRasterImage(spring_chg, group = 'Surface', project = FALSE, colors = spring_pal) %>% 
       addPolygons(data = county, group = 'Solano County', color = '#666666', fill = FALSE) %>% 
       addCircles(data = spring_chg_wells, group = 'Wells', opacity = 1, radius = 20, 
+                 label = ~paste(WSE_S15_10, 'ft'), 
                  popup = ~paste('<b>County</b>', COUNTY, '<br>', '<b>Site ID</b>',SITE_CODE, '<br>', 
                                 '<b>Elevation Change</b>', WSE_S15_10, 'ft')) %>% 
       addLayersControl(baseGroups = c('Map', 'Dark Map', 'Satelite'), overlayGroups = c('Surface', 'Wells', 'Solano County'))%>% 
