@@ -5,6 +5,7 @@ entity_summary <- function(.d) {
     summarise(
       year_total = sum(value)
     ) %>% ungroup() %>% dplyr::select(`Water Resources Management Entity`,year, year_total)
+  print(year_totals)
   
   percent_of_total <- left_join(.d, year_totals) %>% 
     mutate(percent_of_total = value / year_total)
@@ -70,12 +71,12 @@ deliveryUI <- function(id) {
 # Server ----------------------------------------------------------------------
 delivery <- function(input, output, session) {
   
-  deliv_pal <- colorFactor(palette = 'Accent', domain = deliv_entities$Name)
+  deliv_pal <- colorFactor(palette = 'Dark2', domain = deliv_entities$Name)
   
   
   map_events <- reactiveValues(clicked_shape = NULL)
   
-  # listen for a click on a shape file
+  # listen for a click on deliveries shape file
   observeEvent(input$delivery_map_shape_click, {
     map_events$clicked_shape <- input$delivery_map_shape_click$id
   })
@@ -85,6 +86,9 @@ delivery <- function(input, output, session) {
     map_events$clicked_shape <- NULL
   })
   
+  # based on the entity clicked on the map
+  # return a filtered version of solano_deliveries for only that entity
+  # with an additional column that combines water type and year
   deliveries <- reactive({
     if (is.null(map_events$clicked_shape)) {
       return(solano_deliveries %>% 
@@ -92,9 +96,10 @@ delivery <- function(input, output, session) {
       
     }
     solano_deliveries %>% 
-      filter(shape_ref_attr == map_events$clicked_shape) %>% 
+      filter(UID == map_events$clicked_shape) %>% 
       unite(reporting_type, water_type, year, remove = FALSE, sep = " ")
   })
+  
   
   summary_data <- reactive({
     if (is.null(map_events$clicked_shape)) {
@@ -103,7 +108,7 @@ delivery <- function(input, output, session) {
       
     }
     solano_deliveries %>% 
-      filter(shape_ref_attr == map_events$clicked_shape) %>% 
+      filter(UID == map_events$clicked_shape) %>% 
       entity_summary()
   })
   
@@ -112,7 +117,7 @@ delivery <- function(input, output, session) {
     
     entity <- as.character(d[['key']])
     
-    return(deliv_entities[deliv_entities$Name == entity, ])
+    return(deliv_entities[deliv_entities$UID == entity, ])
   })
   
 
@@ -126,9 +131,10 @@ delivery <- function(input, output, session) {
       # basic polygon added needs work!
       addPolygons(data = deliv_entities, 
                   color = ~deliv_pal(Name), 
-                  fill = TRUE, 
-                  layerId=~Name, weight = 2, 
-                  label = ~Name, fillOpacity = .6, 
+                  weight = 2, 
+                  layerId=~UID, 
+                  label = ~Name, 
+                  fillOpacity = .6, 
                   group =~entty_t) %>% 
       addLayersControl(baseGroups = c('Map', 'Satellite', 'Topo'), 
                       overlayGroups = paste(deliv_entities$entty_t))
@@ -143,7 +149,7 @@ delivery <- function(input, output, session) {
       deliveries() %>% 
         mutate(entity_labels = abbreviate(`Water Resources Management Entity`, minlength = 15)) %>% 
         plot_ly(x=~entity_labels, y=~value, color=~reporting_type, 
-                type='bar', colors = "Dark2", source = 'source', key = ~shape_ref_attr) %>% 
+                type='bar', colors = "Dark2", source = 'source', key = ~UID) %>% 
         layout(xaxis = list(title="", tickangle = -45, ticklen = 1, tickfont = 5),
                yaxis = list(title="Volume (acre-feet)"),
                margin = list(pad = 0, b = 90), 
@@ -152,7 +158,7 @@ delivery <- function(input, output, session) {
       deliveries() %>% 
         mutate(entity_labels = abbreviate(`Water Resources Management Entity`, minlength = 15)) %>% 
         plot_ly(x=~entity_labels, y=~value, color=~reporting_type, 
-                type='bar', colors = "Dark2", source = 'source', key = ~shape_ref_attr) %>% 
+                type='bar', colors = "Dark2", source = 'source', key = ~UID) %>% 
         layout(title=paste(deliveries()$`Water Resources Management Entity`[1]), 
                xaxis = list(title="", tickangle = -45, ticklen = 1, 
                             tickfont = 5, showticklabels = FALSE),
@@ -168,11 +174,12 @@ delivery <- function(input, output, session) {
       need(!is.null(map_events$clicked_shape), "Select a delivery entity")
     )
     summ <- summary_data() %>% dplyr::select(-c(`Water Resources Management Entity`, 
-                                               shape_ref_attr))
+                                               shape_ref_attr, UID))
     summ$percent_of_total <- floor(summ$percent_of_total * 100)
     colnames(summ) <- c("Year", "Delivery Type", "Delivered Amount", "Year Total", "Percent of Total")
     summ$`Year Total` <- pretty_num(summ$`Year Total`)
     summ$`Delivered Amount` <- pretty_num(summ$`Delivered Amount`)
+    print(summ)
     return(DT::datatable(summ, options = list(dom = 't', 
                                               columnDefs = list(list(className = 'dt-center', targets = 4)))))
   })

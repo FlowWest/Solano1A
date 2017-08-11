@@ -10,7 +10,7 @@ homeUI <- function(id) {
                     groundwater basins and surface water systems in the County, and support the development of data-driven 
                     strategies for ongoing Solano County engagement in SGMA compliance. 
                     This app was developed to share the findings of the', 
-                    tags$a(href="https://s3-us-west-2.amazonaws.com/solano1a-project/SolanoWaterResourcesStudy_PHASE1A_Report.pdf",
+                    tags$a(href="https://s3-us-west-2.amazonaws.com/solano1a-project/SolanoWaterResourcesStudy_FINAL_updatedAppLink.pdf",
                            target="_blank",
                            'Solano County Water Resources and Groundwater Basin Study'), 
                     'which involved:'),

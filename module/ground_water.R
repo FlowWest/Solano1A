@@ -80,7 +80,7 @@ casgem_data <- function(input, output, session) {
       add_markers(y=~wse, marker=list(color="#668ac4"), name="Water Surface Elevation", 
                   showlegend = TRUE) %>%
       add_lines(y=~GS_ELEVATION, line=list(dash="dash", width=3, color="#fc8d62"), 
-                showlegend = TRUE, name="Ground to Surface Elev.") %>% 
+                showlegend = TRUE, name="Ground Surface Elevation") %>% 
       # this brings up issues for when data set is too small
       # add_lines(y= ~fitted(loess(wse ~ as.numeric(MEASUREMENT_DATE))),
       #           line = list(color="#b2df8a", width=5), name = "Fitted Trend (loess)",

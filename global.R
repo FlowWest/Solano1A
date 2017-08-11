@@ -21,7 +21,7 @@ source('module/water_balance.R')
 
 applied_demand <- read_rds("data/delivery/applied_water_demand2.rds")
 applied_demand$display_name <- factor(applied_demand$display_name)
-solano_deliveries <- read_rds("data/delivery/solano_county_deliveries.rds")
+solano_deliveries <- read_rds("data/delivery/solano_county_deliveries_2.rds")
 percent_delivered <- read_csv("raw-data/percent_deliveries_updated.csv")
 casgem_metadata <- read_rds('data/casgem/gst_in_solano_2017.rds')
 casgem <- read_rds('data/casgem/gwl_in_solano_2017.rds')
