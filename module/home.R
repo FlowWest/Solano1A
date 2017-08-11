@@ -60,7 +60,7 @@ home <- function(input, output, session) {
       addProviderTiles(providers$Esri.WorldImagery, group = 'Satelite') %>% 
       setView(lng = -121.933136, lat = 38.301334, zoom = 10) %>%
       addPolygons(data = county, group = 'Solano County', color = '#666666', fill = FALSE, weight = 3) %>% 
-      addPolygons(data = groundwater_basins, label = ~Basin_Name, color = ~pal2(Basin_Name),  weight = 2,
+      addPolygons(data = groundwater_basins, label = ~Subbasin_N, color = ~pal2(Basin_Name),  weight = 2,
                   group = 'Groundwater Basins') %>% 
       addPolygons(data = deliv_entities, color = ~pal(Name), weight = 2, 
                   label = ~Name, group = 'Delivery Entity') %>% 

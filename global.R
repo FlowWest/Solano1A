@@ -31,6 +31,9 @@ balance_data$display_label <- factor(balance_data$display_label)
 sub_basin <- rgdal::readOGR('data/solano_subbasin/solano_subasin2016.shp', stringsAsFactors = FALSE) %>%
   spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
 
+sub_basin_county <- rgdal::readOGR('data/subbasin_county/subbasin_cty.shp', stringsAsFactors = FALSE) %>%
+  spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
+
 gsa <- rgdal::readOGR('data/CA_GSAs/GSA_Master.shp', stringsAsFactors = FALSE) %>%
   spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs"))
 
@@ -57,6 +60,8 @@ groundwater_basins <- rgdal::readOGR('data/B118_CA_GroundwaterBasins_Revised2016
   spTransform(CRS("+proj=longlat +datum=WGS84 +no_defs")) %>%
   subset(Basin_Subb %in% c('2-002.03', '2-003', '5-021.66'))
 
+groundwater_basins@data$Subbasin_N <- c('Napa-Sonoma Lowlands Subbasin', 'Suisun-Fairfield Vally Basin', 'Solano Subbasin')
+
 # crop data
 crop_acres <- read_excel('raw-data/crops_2010_2015.xlsx', sheet = "2015 v 2010 Acres")
 crop_demand <- read_excel('raw-data/crops_2010_2015.xlsx', sheet = "2015 v 2010 Demand")
@@ -71,7 +76,7 @@ temp <- awd_deliv_ent %>%
 sub_deliv_ent@data <- sub_deliv_ent@data %>% 
   dplyr::left_join(temp)
 
-sub_basin@data <- bind_cols(sub_basin@data, awd_deliv_ent[2,])
+sub_basin_county@data <- bind_cols(sub_basin_county@data, awd_deliv_ent[2,])
 
 
 

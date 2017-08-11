@@ -190,20 +190,21 @@ demand <- function(input, output, session) {
     leaflet() %>% 
       addProviderTiles(providers$CartoDB.Positron, group = 'Map') %>% 
       addProviderTiles(providers$Esri.WorldImagery, group = 'Satelite') %>% 
-      addPolygons(data = ROIs, color = ~pal2015(AWD2015_AF), 
+      addPolygons(data = ROIs, color = ~pal2015(AWD2015_AF), weight = 2,
                   label = ~Name,
                   popup = ~paste('<b>Total Acres</b> <br>', pretty_num(Acres, 0), '<br><br>',
                                  '<b> Applied Water Demand </b><br>',
                                  '<b style = padding-left:10px;>2010</b>', pretty_num(AWD2010_AF, 0), '<em>AF/acre</em>',
                                  '<br><b style = padding-left:10px;>2015</b>', pretty_num(AWD2015_AF, 0),'<em>AF/acre</em>'),
                   group = 'Regions') %>% 
-      addPolygons(data = sub_basin, group ='Solano Sub Basin', label = ~Boundary,
+      addPolygons(data = sub_basin_county, group = 'Solano Sub Basin', 
+                  label = 'Solano Sub-basin within the County', weight = 2,
                   popup = ~paste('<b>Total Acres</b> <br>', pretty_num(Acres, 0), '<br><br>',
                                  '<b> Applied Water Demand </b><br>',
                                  '<b style = padding-left:10px;>2010</b>', pretty_num(`2010 (Acre-ft)`, 0), '<em>AF/acre</em>',
                                  '<br><b style = padding-left:10px;>2015</b>', pretty_num(`2015 (Acre-ft)`, 0),'<em>AF/acre</em>')) %>% 
       addPolygons(data = sub_deliv_ent, group = 'Delivery Entities', color = ~palent(Acronym),
-                  label = ~Acronym,
+                  label = ~Acronym, weight = 2,
                   popup = ~paste('<b>Total Acres</b> <br>', pretty_num(Acres, 0), '<br><br>',
                                  '<b> Applied Water Demand </b><br>',
                                  '<b style = padding-left:10px;>2010</b>', pretty_num(`2010 (Acre-ft)`, 0), '<em>AF/acre</em>',
